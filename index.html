@@ -12,6 +12,8 @@
       
       
       
+        <link rel="next" href="category/dev/">
+      
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="feed_rss_created.xml">
         <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="feed_rss_updated.xml">
@@ -286,9 +288,21 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="." class="md-nav__link">
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
   
   <span class="md-ellipsis">
     Archive
@@ -296,7 +310,112 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="archive/2025/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2025
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="category/dev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dev
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -342,6 +461,71 @@ read my resume over at my <a href="https://cv.dusktreader.dev">cv site</a>. Than
 is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1">CC BY-SA 4.0</a></p>
       </header>
       
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://github.com/dusktreader.png" alt="Tucker Beck">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2025-03-29 00:00:00+00:00">March 29, 2025</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="category/dev/" class="md-meta__link">dev</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="self-contained-python-scripts-with-uv"><a class="toclink" href="2025/03/29/self-contained-python-scripts-with-uv/">Self-contained Python scripts with <code>uv</code></a></h2>
+<div class="admonition tip">
+<p class="admonition-title">TLDR</p>
+<p>You can add uv into the shebang line for a Python script to make it a self-contained executable.</p>
+</div>
+<p>I am working on a Go project to better learn the language. It's a simple API backed by a postgres database.</p>
+<p>When I need to test out an endpoint, I prefer to use the <a href="https://www.python-httpx.org/">httpx</a> python package inside an
+<a href="https://ipython.org/">ipython</a> REPL over making curl requests. It's nice to be able to introspect responses and easily
+package payloads with dicts instead of writing out JSON.</p>
+<p>Anyway, I decided to write a script to upsert some user data so that I can beat on my <code>/users</code> endpoint.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2025/03/29/self-contained-python-scripts-with-uv/">
+          Continue reading
+        </a>
+      </nav>
+    
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  
+</nav>
+        
       
     </div>
   </div>
@@ -354,6 +538,28 @@ is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=c
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+        
+          
+          <a href="category/dev/" class="md-footer__link md-footer__link--next" aria-label="Next: dev">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                dev
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
