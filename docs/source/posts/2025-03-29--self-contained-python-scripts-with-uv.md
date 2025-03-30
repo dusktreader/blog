@@ -7,6 +7,7 @@ categories:
 tags:
   - Python
   - uv
+comments: true
 ---
 
 # Self-contained Python scripts with `uv`

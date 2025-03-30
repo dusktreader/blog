@@ -6,6 +6,7 @@ repo_url: https://github.com/dusktreader/blog
 docs_dir: source
 theme:
   name: material
+  custom_dir: overrides
   font:
     code: Fira Code
   features:
