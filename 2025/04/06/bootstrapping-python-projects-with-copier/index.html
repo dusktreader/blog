@@ -1,0 +1,2046 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://blog.dusktreader.dev/2025/04/06/bootstrapping-python-projects-with-copier/">
+      
+      
+        <link rel="prev" href="../../../03/29/self-contained-python-scripts-with-uv/">
+      
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Bootstrapping Python projects with copier - the.dusktreader blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bootstrapping-python-projects-with-copier" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="the.dusktreader blog" class="md-header__button md-logo" aria-label="the.dusktreader blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            the.dusktreader blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bootstrapping Python projects with copier
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dusktreader/blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="the.dusktreader blog" class="md-nav__button md-logo" aria-label="the.dusktreader blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    the.dusktreader blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dusktreader/blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Posts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2025/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/dev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dev
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-case-study" class="md-nav__link">
+    <span class="md-ellipsis">
+      A case study
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-boring-stuff" class="md-nav__link">
+    <span class="md-ellipsis">
+      The boring stuff
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The boring stuff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseline-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baseline requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Baseline requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#readmemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      README.md
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licensemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      LICENSE.md
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changelogmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      CHANGELOG.md
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ergonomics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ergonomics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ergonomics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Makefile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      uv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Actions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Processes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Processes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      git init
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      To GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Pages
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summing-up-the-boring-stuff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summing up the boring stuff
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automating-the-boring-stuff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automating the boring stuff
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automating the boring stuff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-engine-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template Engine Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template variables
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      project_name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      project_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#module_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      module_name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      python_versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default_python_version" class="md-nav__link">
+    <span class="md-ellipsis">
+      default_python_version
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copieryaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      copier.yaml
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="copier.yaml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic questions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choices
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-out-the-project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building out the project structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#making-a-templated-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Making a templated file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-template-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a template folder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-a-new-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a new project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automating-github-deployment-with-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automating GitHub Deployment with Tasks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automating GitHub Deployment with Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-1-make-sure-the-project-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 1: Make sure the project works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-2-6-initialize-the-git-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 2-6: Initialize the git repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-7-8-create-the-project-on-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 7 &amp; 8: Create the project on GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-9-11-publish-the-github-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 9-11: Publish the GitHub Page
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-12-14-wrapping-it-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 12-14: Wrapping it up
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://github.com/dusktreader.png" alt="Tucker Beck">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://cv.dusktreader.dev">Tucker Beck</a>
+                        
+                      </strong>
+                      <br>
+                      Creator
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-04-06 00:00:00+00:00" class="md-ellipsis">April 6, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/dev/">dev</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              29 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">Python</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">copier</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">uv</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="bootstrapping-python-projects-with-copier">Bootstrapping Python projects with <code>copier</code></h1>
+<div class="admonition tip">
+<p class="admonition-title">TLDR</p>
+<p>I used <a href="https://copier.readthedocs.io/en/stable/"><code>copier</code></a> to create a <a href="https://github.com/dusktreader/dusky-clone">python project
+template</a> that includes logic to deploy the project to GitHub.</p>
+</div>
+<p>I tend to create a lot of Python projects of various sizes. In the past few weeks, this has been even more frequent.
+Just a few days ago, I started a new project called <a href="https://github.com/dusktreader/drivel">drivel</a>. It is a
+<a href="https://aws.amazon.com/what-is/cli/">CLI</a> and Python package that generates fun
+<a href="https://en.wikipedia.org/wiki/Metasyntactic_variable">metasyntactic names</a> (think <code>foo</code>, <code>bar</code>, <code>baz</code>) to use in my
+code. You can read more about it in the <a href="https://dusktreader.github.io/drivel">drivel docs</a> if you want to learn more.</p>
+<p>When I went to start this project, I did what I usually do. I copied one of my other projects to a new directory and
+started ripping stuff out, renaming things, and just generally futzing around until I had the scaffolding for my new
+project. This isn't hard work, but it <em>always</em> ends up taking a lot longer than I expect.</p>
+<p>There are a lot of conventions that I've gotten attached to in my projects over the years. And, while it's not that
+hard to just borrow things from past projects, it's boring work that cries out to be automated.</p>
+<p>So, I decided to create a project template that would allow me to do all this in just a matter of seconds.</p>
+<!-- more -->
+
+<div class="admonition warning">
+<p class="admonition-title">Open to work</p>
+<p>I'm looking for a job right now! If you know of any openings that match my skill-set, please let me know! You can
+read my resume over at my <a href="https://cv.dusktreader.dev">cv site</a>. Thanks!</p>
+</div>
+<h2 id="a-case-study">A case study</h2>
+<p>As I go through this article, I'm going to use an imaginary project as a case study. I'm calling it <code>space-monkey</code>,
+because it's all about doing an exploratory trial run. Just like the
+<a href="https://en.wikipedia.org/wiki/Monkeys_and_apes_in_space">monkeys and apes</a> that were sent into orbit before humans,
+this project will be used to explore and test my project template.</p>
+<h2 id="the-boring-stuff">The boring stuff</h2>
+<p>Before I get into how I actually built out the template, I want to take some time going over the reasons why the
+projects I produce from this template are the way they are. To do that, I need to go over my personal <em>philosophy</em> for
+setting up Python projects. This might not be that interesting to you. If so, feel free to skip ahead to the
+<a href="#automating-the-boring-stuff">fun stuff</a>.</p>
+<p>There are some basic essentials that I like to have in my Python projects. These come in three flavors:</p>
+<ol>
+<li>Baseline requirements for a good project</li>
+<li>Ergonomics to make the project nice to work on</li>
+<li>Processes to make the project ready to go</li>
+</ol>
+<p>Let's look at each one in a little detail.</p>
+<h3 id="baseline-requirements">Baseline requirements</h3>
+<p>I am kind of a stickler for a few baseline requirements that I have for my projects. Even for small projects, I like to
+make sure that requirements are met so I don't feel...icky working in my own code.</p>
+<p>Here are the requirements that I've settled on over the years of writing Python projects:</p>
+<ul>
+<li>A decent <code>README.md</code></li>
+<li>A <code>LICENSE.md</code> file</li>
+<li>A <code>CHANGELOG.md</code></li>
+<li>A <code>pyproject.toml</code></li>
+<li>Good project structure</li>
+<li>Docs</li>
+</ul>
+<p>Each one of these requirements is born of past experiences working on Python projects. Along the way, I've learned some
+best practices and definitely developed some rather opinionated preferences for each. As I walk through these, please
+keep in mind that these are my opinions and preferences for my own projects. I don't think it's gospel; it's just what I
+like.</p>
+<h4 id="readmemd"><code>README.md</code></h4>
+<p>I've become convinced  that <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> is the best format for writing
+documentation at every level. I used to be pretty attached to
+<a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">reStructuredText</a> (or RST), and it is a <em>very</em>
+powerful spec for writing technical documentation. But it has some serious drawbacks. For one, the syntax is far more
+<a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#hyperlinks">esoteric</a>. Also, working with the
+<a href="https://www.sphinx-doc.org">Sphinx</a> documentation engine is not very fun. Overall, Markdown is just <em>better</em>. It
+doesn't come out-of-the-box with all the powerful features available with Sphinx and reStructuredText, but I've found
+that using Markdown with the extensions provided by <a href="https://squidfunk.github.io/mkdocs-material/">mkdocs-material</a>
+provides what I need and makes producing nice looking documentation a breeze.</p>
+<p>So, I usually start with a <code>README.md</code> with a few essential elements:</p>
+<ul>
+<li>A project summary</li>
+<li>A "Super-quick start" section that briefly explains how to install the project.</li>
+<li>For a CLI or similar tool, a brief demonstration of how to run it</li>
+<li>A link to the documentation page</li>
+</ul>
+<p>That's pretty much it. For smaller projects, I've leaned on the README to document the whole project. However, with
+mkdocs-material and <a href="https://pages.github.com/">GitHub Pages</a>, it's so easy to stand up a docs site that I usually do
+that for even small projects.</p>
+<h4 id="licensemd"><code>LICENSE.md</code></h4>
+<p>For any project that you are going to host on a public GitHub repository, you need to have a software license. The
+<a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository">GitHub docs</a>
+offer a good explanation:</p>
+<blockquote>
+<p>without a license, the default copyright laws apply, meaning that you retain all rights to your source code and no one
+may reproduce, distribute, or create derivative works from your work.</p>
+</blockquote>
+<p>Another good reason to have a license is to make sure that you can't be held <em>liable</em> for misuse of your software or
+its failure in any situation.</p>
+<p>As a rule, I prefer a very permissive license and use the <a href="https://choosealicense.com/licenses/mit/">MIT License</a></p>
+<p>But, why make it a Markdown file and not not just <code>LICENSE</code> without an extension? Well, I usually use just a <em>little</em>
+bit of markup in the file. More importantly, though, it signals to the OS and users that the file contains text and
+should be opened with a text viewer/editor.</p>
+<h4 id="changelogmd"><code>CHANGELOG.md</code></h4>
+<p>I used to be pretty lax with CHANGELOGs, but after reading <a href="https://keepachangelog.com/en/1.1.0/">keep a changelog</a>, I
+realized that it's a pretty important element of an open-source software project.</p>
+<p>Since I started including them, I've found that they are extremely useful for other people who want to learn about how
+your project has evolved over time. More importantly, it helps identify when significant changes (like dropping version
+support) came to be. Now, when I'm reading up on a project <em>without</em> a changelog, I get pretty grumpy.</p>
+<h4 id="structure">Structure</h4>
+<p>This is <em>so</em> subjective. I've also been through <em>many</em> iterations of different structures with pretty strong opinions on
+each one that I adopted. I used to be pretty adamant about using a "flat layout", but these days I've adopted the
+<a href="https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/">src layout</a>. In the end, the deciding
+factor was that <a href="https://docs.astral.sh/uv">uv</a> prefers the "src layout", and I've been using <code>uv</code> <em>a lot</em> lately.</p>
+<p>So, my basic project structure looks like:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>space-monkey/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>└── .github/
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ├── workflows/
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    │   ├── deploy.yml
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    │   ├── docs.yml
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    │   └── main.yml
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    ├── docs/
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    │   ├── source/
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    │   │   ├── features.md
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    │   │   ├── index.md
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    │   │   ├── quickstart.md
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    │   │   └── reference.md
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    │   └── mkdocs.yaml
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    ├── src/
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    │   └── space_monkey/
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    │       ├── __init__.py
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    │       ├── main.py
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    │       └── py.typed
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    └── tests/
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        ├── __init__.py
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        ├── conftest.py
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        └── test_main.py
+</span></code></pre></div>
+<p>Note that this structure includes a <code>tests</code> directory that includes a full suite of unit tests and integration tests
+when they are appropriate. I use <a href="https://docs.pytest.org/en/stable/">pytest</a> to run my tests--it's really just the
+best option out there.</p>
+<h4 id="documentation">Documentation</h4>
+<p>As I mentioned in the <a href="#readmemd">README.md section</a>, I usually put the bulk of my documentation in a static site hosted
+on GitHub pages and generated by mkdocs-material. It's really easy, and it results in a nice docs site that is
+searchable, themed, and familiar.</p>
+<p>In fact, this blog itself is a GitHub Pages site built with mkdocs-material!</p>
+<p>At a minimum, I like my docs to include an overview of the project, a good description of usage, a full explanation of
+the features, examples, and a reference section that is built from the docstrings in the project.</p>
+<h3 id="ergonomics">Ergonomics</h3>
+<p>Beyond the baseline requirements, I like to add some elements to my projects that make them nice to work on. I love
+good tools that are pleasure to use, so I'm always looking for cool things I can bring into my projects to make them
+more fun to work on. There are 3 core elements to all my projects that improve the ergonomics. These include:</p>
+<ol>
+<li>A <code>Makefile</code></li>
+<li><code>uv</code> support</li>
+<li>GitHub actions</li>
+</ol>
+<p>I'll explain a little about each one.</p>
+<h4 id="makefile"><code>Makefile</code></h4>
+<p>There are a <a href="https://en.wikipedia.org/wiki/List_of_build_automation_software#Non-Make-based_tools">lot of alternatives</a>
+to <a href="https://en.wikipedia.org/wiki/Make_(software)"><code>make</code></a> these days. So, why do I chose something so old? It
+certainly isn't the <em>syntax</em>. Instead, it's because <code>make</code> comes pre-installed in most unix systems. So, it's nice to
+use something that doesn't require an installation. That might not be a great reason, but I have a good <code>Makefile</code>
+structure now, so I'm sticking with it for the time being.</p>
+<p>My <code>Makefile</code> usually has these targets:</p>
+<ul>
+<li><strong>test</strong>:       run the test suite</li>
+<li><strong>lint</strong>:       run code linters</li>
+<li><strong>types</strong>:      run type-checkers</li>
+<li><strong>qa</strong>:         run all three of <code>test</code>, <code>lint</code>, and <code>types</code></li>
+<li><strong>format</strong>:     run a code formatter</li>
+<li><strong>docs</strong>:       build the docs</li>
+<li><strong>docs-serve</strong>: build the docs and run them in a local, auto-refreshing server</li>
+<li><strong>clean</strong>:      clean up all the cruft including cache files and build artifacts</li>
+<li><strong>help</strong>:       show available <code>make</code> targets</li>
+</ul>
+<p>It's really convenient to just run <code>make qa</code> and see all the quality checks being applied.</p>
+<h4 id="uv"><code>uv</code></h4>
+<p>Like I said before, I've been using <a href="https://docs.astral.sh/uv"><code>uv</code></a> these days for all my new projects. It's really
+fast and has <em>most</em> of the features I want in project management software for Python. Beyond that, though, it has
+<em>massive</em> adoption in the Python community. I really believe this will become the standard for Python projects in the
+coming years.</p>
+<p>I used to be a <em>die-hard</em> supporter of <a href="https://python-poetry.org/"><code>poetry</code></a>. I still like the project, but I've found
+that <code>uv</code> is just nicer to use.</p>
+<p>As a bonus, <code>uv</code> comes with built-in Python version management with a better API and faster execution times than
+<a href="https://github.com/pyenv/pyenv">pyenv</a> (which I used to use).</p>
+<p>So, all my projects these days are configured for <code>uv</code> to manage them. Since <code>uv</code> doesn't have a build backend
+<a href="https://github.com/astral-sh/uv/issues/3957">yet</a>, I fallback on using <a href="https://hatch.pypa.io/latest/">hatchling</a> in my
+<code>pyproject.toml</code></p>
+<h4 id="github-actions">GitHub Actions</h4>
+<p>It's <em>really</em> nice to take advantage of <a href="https://aws.amazon.com/devops/continuous-integration/">CI</a> even in small
+projects. Having automated quality checks and deployments built right into a project really take it to the next level. I
+usually set up three GitHub actions for my projects:</p>
+<ul>
+<li>run qa checks on any pushed branch</li>
+<li>build &amp; deploy docs on any merge to <code>main</code></li>
+<li>deploy a new version of the package on any tag matching a <a href="https://semver.org/">semver</a> format</li>
+</ul>
+<p>Many of the projects I make end up getting deployed on <a href="https://pypi.org/">PyPI</a>, so the third of these actions is
+really nice to have. If the project won't be deployed as a package, I'll leave off the third one.</p>
+<h3 id="processes">Processes</h3>
+<p>This might be the <em>most</em> boring of these boring parts. In general, when I'm starting a new project, I like to put it up
+on GitHub right away. This allows me to work on the project from anywhere. Since I work from a rented office a few miles
+down the road, it's nice to be able to just pull down the latest changes from GitHub directly instead of using
+<a href="https://en.wikipedia.org/wiki/Secure_copy_protocol"><code>scp</code></a> or <a href="https://linux.die.net/man/1/rsync"><code>rsync</code></a> to move the
+files around. So, to get a new project set up on GitHub, I do these steps:</p>
+<ol>
+<li>Initialize the git repo</li>
+<li>Host it on GitHub</li>
+<li>Set up a GitHub Page</li>
+</ol>
+<p>None of these are <em>interesting</em>, but they are important steps, and (before the new project template) they were all done
+manually.</p>
+<h4 id="git-init"><code>git init</code></h4>
+<p>That's the main command at the heart of setting up a new git repo locally. However, there's a few other things I like to
+do. I like my <em>first</em> commit to have nothing in it but a <code>README.md</code> that contains <em>nothing</em> but the title of the
+project. It's not really a fun thing to try to rebase the first commit in a git repo. So, having it be almost completely
+empty means that I can use it as an immutable base for all future commits.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>init
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>add<span class="w"> </span>REAME.md
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial Commit&quot;</span>
+</span></code></pre></div>
+<p>Once that's done, my next commit will contain all of the contents (minus cruft that <code>make clean</code> will remove) of the
+project. Usually, I won't <em>finalize</em> this commit until I have the <a href="https://www.agilealliance.org/glossary/mvp">MVP</a>
+working. That often means making several temporary commits that all get squashed down into this one before I push it
+anywhere.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: Bootstrapped the space-mokey project&quot;</span>
+</span></code></pre></div>
+<h4 id="to-github">To GitHub</h4>
+<p>This is just a matter of going to <a href="https://github.com">GitHub</a> and clicking the <code>+</code> button to create a new repository:</p>
+<figure>
+<p><img align="center" alt="The plus button" src="../../../../images/2025-04-06--plus-button.png" /></p>
+<figcaption>
+<p>Screenshot of the plus button</p>
+</figcaption>
+</figure>
+<p>Then, there's the fun of setting the upstream git repository hosted on GitHub as the origin for the local git
+repository. Once that's done, it's just a matter of pushing <code>main</code> to origin.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>git@github.com:dusktreader/space-monkey.git
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</span></code></pre></div>
+<h4 id="github-pages">GitHub Pages</h4>
+<p>Finally, to publish the docs on GitHub pages, you have to change a few settings. First, you need to go to the <code>settings</code>
+for your project and find the <code>actions</code> section on the left. Once there, scroll down and find "Workflow Permissions".
+Then, change it to enable "Read and write permissions".</p>
+<figure>
+<p><img align="center" alt="Read and write permissions" src="../../../../images/2025-04-06--write-perms.png" /></p>
+<figcaption>
+<p>Screenshot of actions settings</p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Easier method</p>
+<p>I discovered a little later that it's not necessary to set the Read and write permissions manually if you set the
+permissions inside of the GitHub action to build the docs like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">build</span><span class="p">:</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">permissions</span><span class="p">:</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="nt">pages</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+</span></code></pre></div>
+</div>
+<p>Once that's done, while you are still in settings, the deployment branch needs to be selected. This is found under the
+"Pages" section on the left. Then, the <code>gh-pages</code> branch and root folder needs to be selected. Any branch can be used
+for deployment, but the <a href="https://github.com/peaceiris/actions-gh-pages">actions-gh-pages</a> action that I use builds the
+docs in the <code>gh-pages</code> branch by default.</p>
+<figure>
+<p><img align="center" alt="Branch and Root" src="../../../../images/2025-04-06--select-branch.png" /></p>
+<figcaption>
+<p>Screenshot of branch and folder selection</p>
+</figcaption>
+</figure>
+<p>Note that you can't actually <em>select</em> the <code>gh-pages</code> branch unless it has been created already. The <code>actions-gh-pages</code>
+action will do this automatically, but it must have completed successfully first. If it failed after that initial push,
+it's probably because the "Read and write permissions" weren't enabled yet. It's easy to just re-run the action in that
+case to build the docs.</p>
+<h3 id="summing-up-the-boring-stuff">Summing up the boring stuff</h3>
+<p>So, now I've described all the setup and scaffolding that I like to include in a Python project. Given all that is here,
+you can see why it takes a while to get everything into place for a new project. This <em>really is</em> the boring part of a
+new project. Nothing I've talked about yet is that creative or interesting.</p>
+<h2 id="automating-the-boring-stuff">Automating the boring stuff</h2>
+<p>There's a seminal book about Python called <a href="https://automatetheboringstuff.com/">Automate the Boring Stuff with Python</a>
+by <a href="https://alsweigart.com/">Al Sweigart</a> that operates on the premise that Python is a great language for automating
+boring tasks. While the template project that I built doesn't <em>itself</em> use much Python, the sentiment is a good one. The
+whole point of the template project and this article is how automation takes away the drudgery of setting up a new
+Python project. So, let's get into the fun part!</p>
+<h3 id="template-engine-selection">Template Engine Selection</h3>
+<p>There are a few project template engines out there including the most famous:
+<a href="https://github.com/cookiecutter/cookiecutter">cookiecutter</a>. I've used <code>cookiecutter</code> before, and it's...fine. However,
+I've also found some <a href="https://github.com/cookiecutter/cookiecutter/issues/723">sharp edges</a> while using it.</p>
+<p>Overall, I just wanted to try something new, so I reached for <a href="https://copier.readthedocs.io/en/stable/">copier</a>.</p>
+<p><code>copier</code> has a lot of <a href="https://copier.readthedocs.io/en/stable/comparisons/">cool features</a> that are unique to it.
+Really, though, I'm only interested in creating a template to automate setting up a new Python project. After reading
+over the docs for a bit, I felt good about my selection and got to work.</p>
+<h3 id="template-variables">Template variables</h3>
+<p>After examining a few of my old project, I identified 5 elements that are essential to a new Python project. With these
+5 settings, I can bootstrap a new project that is customized and ready to go. These 5 elements can be defined by
+<a href="https://jinja.palletsprojects.com/en/stable/templates/#variables">template variables</a> that <code>copier</code> learns by
+asking you interactive questions to get the values. The 5 elements are:</p>
+<ol>
+<li><code>project_name</code></li>
+<li><code>project_summary</code></li>
+<li><code>module_name</code></li>
+<li><code>python_versions</code></li>
+<li><code>default_python_version</code></li>
+</ol>
+<p>I'll explain each one in more detail.</p>
+<h4 id="project_name"><code>project_name</code></h4>
+<p>This will be the name of the project, the name of the folder that holds it, and the package name on PyPI. In our case
+study, this is <code>space-monkey</code>.</p>
+<p>I like my <code>project_name</code> to use <a href="https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case">kebab case</a> for longer
+names, and I like the to name to always be lowercase.</p>
+<h4 id="project_summary"><code>project_summary</code></h4>
+<p>This is a short description of what the project is and does. It's usually just a sentence long. I use this at the top of
+the <code>README.md</code>, in the docs, in the <code>pyproject.toml</code>, and on the GitHub page for the project. For <code>space-monkey</code>, let's
+use "It's a trial run" as the <code>project_summary</code>.</p>
+<h4 id="module_name"><code>module_name</code></h4>
+<p>This is the name of the Python module from which any source code is imported. Often, this is the same as the
+<code>project_name</code>. However, if the <code>project_name</code> has dashes in it, a Python module can't include those. Thus it should use
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/Snake_case">snake case</a>. For <code>space-monkey</code>, the <code>module_name</code>
+becomes <code>space_monkey</code>.</p>
+<h4 id="python_versions"><code>python_versions</code></h4>
+<p>These are the versions of Python that the project should support. This should be a consecutive list of Python versions
+that the project's source code <em>will</em> work in. The full list is used in the GitHub action that runs tests and
+type-checks on all branches. The <em>range</em> of versions is used in <code>pyproject.toml</code> to identify compatible Python versions
+for the project.</p>
+<h4 id="default_python_version"><code>default_python_version</code></h4>
+<p>This should identify the Python version that is used by default in the project. For example, the project might <em>support</em>
+all the way back to Python 3.9, but I prefer to work in Python 3.13. This is the version that will get set in the
+<code>.python-version</code> so that <code>uv</code> runs everything in Python 3.13 for <code>space-monkey</code>.</p>
+<h3 id="copieryaml"><code>copier.yaml</code></h3>
+<p>Once I knew the key elements for the <code>copier</code> project, I could constrain the questions in the <code>copier</code> configuration
+file named <code>copier.yaml</code>. This file sits at the root of the template project and defines everything <code>copier</code> needs to
+know in order to generate a new project.</p>
+<h4 id="basic-questions">Basic questions</h4>
+<p>First, I needed to define the basic questions. So, I started pretty simply:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">project_name</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the name of the project?</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nt">project_summary</span><span class="p">:</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Provide a short summary of the project.</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nt">module_name</span><span class="p">:</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the Python module name?</span>
+</span></code></pre></div>
+<p>This was very straightforward. <code>copier</code> asks the question described by the <code>help</code> field and stores the answer provided by
+the user in the template variable.</p>
+<p>However, I realized there was an issue here. What if the user (me) enters the empty string as the <code>project_name</code>?
+Since this will be used as the name of the folder to hold the project, it obviously must not be the empty string.
+Additionally, as I said earlier, I want the <code>project_name</code> to be in "kebab" case and only include lowercase characters.</p>
+<p>To make this possible, I used a <code>copier</code> validator. Fortunately, the <code>copier.yaml</code> file can include some <code>jinja</code> in it
+to make things more dynamic. After setting up my validator, the <code>project_name</code> definition ended up looking
+like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">project_name</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the name of the project?</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">validator</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="no">{% if project_name|length &lt; 4 or project_name|length &gt; 40 %}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="no">project_name must be between 4 and 40 characters</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="no">{% endif %}</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="no">{% if not (project_name | regex_search(&#39;^[a-z][a-z0-9\-]+$&#39;)) %}</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="no">project_name must start with a letter, followed one or more letters, digits or dashes (all lowercase).</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="no">{% endif %}</span>
+</span></code></pre></div>
+<p>Notice that the <code>validator</code> item in the yaml is defined as a multiline string using the <code>|</code> operator. This is because
+all <code>jinja</code> directives have to be in strings so that the file itself is still valid YAML. Read more in the
+<a href="https://copier.readthedocs.io/en/stable/configuring/#prompt-templating"><code>copier</code> docs</a> about these constraints.</p>
+<p>Next, I wanted to also constrain the <code>project_summary</code>. I also wanted it to have a default value that was equivalent
+to the <code>project_name</code> only in "snake_case" instead of "kebab-case". I ended up writing this definition as:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">module_name</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the Python module name?</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name.replace(&#39;-&#39;,</span><span class="nv"> </span><span class="s">&#39;_&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">validator</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="no">{% if module_name|length &lt; 4 or module_name|length &gt; 40 %}</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="no">module_name must be between 4 and 40 characters</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="no">{% endif %}</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="no">{% if not (module_name | regex_search(&#39;^[a-z][a-z0-9_]+$&#39;)) %}</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="no">module_name must start with a letter, followed one or more letters, digits or underscores (all lowercase).</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="no">{% endif %}</span>
+</span></code></pre></div>
+<p>I decided that I didn't care if the <code>project_summary</code> was empty, so I didn't add a validator for it.</p>
+<h4 id="choices">Choices</h4>
+<p>For the <code>python_versions</code> question, I needed to define a set of choices that the user can choose from to limit the
+answer for the supported versions of Python. This keeps the user from selecting a version of python that doesn't exist
+or isn't supported any more:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">python_versions</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">default</span><span class="p">:</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.9&quot;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.11&quot;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.12&quot;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.13&quot;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nt">multiselect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span><span class="nt">choices</span><span class="p">:</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.9&quot;</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.11&quot;</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.12&quot;</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.13&quot;</span>
+</span></code></pre></div>
+<p>This works by limiting the choices to Python 3.9 through 3.13. Because I enabled <code>multiselect</code> the user can select more
+than one Python version to include. Additionally, I set the default to all available versions to just make things
+easier.</p>
+<p>If you have a discerning eye, you might notice a problem here. I will be using these Python versions in <code>pyproject.toml</code>
+to identify what versions my project should work with. However (according to it's
+<a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/">specification</a>) <code>pyproject.toml</code> can only
+specify a <em>range</em> of versions if more than one must be supported. Thus, I could have an issue if the selected versions
+were not consecutive. Choosing 3.10, 3.12, 3.13 while leaving out 3.11 would be problematic. To address this, I figured
+out a validator that can handle this constraint:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">python_versions</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What Python versions will be supported?</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">default</span><span class="p">:</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.9&quot;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.11&quot;</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.12&quot;</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.13&quot;</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">multiselect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="nt">choices</span><span class="p">:</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.9&quot;</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.11&quot;</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.12&quot;</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3.13&quot;</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span><span class="nt">validator</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="no">{% set all_ver = [&quot;3.9&quot;, &quot;3.10&quot;, &quot;3.11&quot;, &quot;3.12&quot;, &quot;3.13&quot;] %}</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="no">{% if all_ver.index(python_versions[-1]) - all_ver.index(python_versions[0]) + 1 != python_versions|length %}</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="no">python_versions must be a consecutive list of versions</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="no">{% endif %}</span>
+</span></code></pre></div>
+<p>Next, I needed to create a question for the <code>default_python_version</code>. Right away, it was clear that this <em>had</em> to be
+constrained to be one of the values chosen for <code>python_versions</code>. Additionally, I wanted this to default to the <em>latest</em>
+supported Python version from the selected list. To make this happen, I made <code>default_python_version</code> quite dynamic:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">default_python_version</span><span class="p">:</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the default Python version to use?</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{python_versions[-1]}}&quot;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">choices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="no">{% for ver in python_versions %}</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="no">- &quot;{{ver}}&quot;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="no">{% endfor %}</span>
+</span></code></pre></div>
+<p>With that, I'd finished defining the questions needed to define the 5 critical template variables needed for a new
+project.</p>
+<h3 id="building-out-the-project-structure">Building out the project structure</h3>
+<p><code>copier</code> uses <a href="https://jinja.palletsprojects.com/en/stable/">Jinja</a> to inject the values for the template variables it
+gathers from the questionnaire into not only the <em>contents</em> of the project template files, but into their filenames as
+well. To inject into files, the files must be of type <code>.jinja</code>.</p>
+<p>Remember my <a href="#structure">directory structure</a> that I laid out before? Well, now I need to convert some of those files
+into Jinja templates so that I can get the correct values into them. To fast-forward a bit, the file structure now looks
+like this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{{project_name}}/
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>└── .github/
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    ├── workflows/
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    │   ├── deploy.yml.jinja
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    │   ├── docs.yml.jinja
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    │   └── main.yml.jinja
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    ├── docs/
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    │   ├── source/
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    │   │   ├── features.md
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    │   │   ├── index.md.jinja
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    │   │   ├── quickstart.md.jinja
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    │   │   └── reference.md.jinja
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    │   └── mkdocs.yaml.jinja
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    ├── src/
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    │   └── {{module_name}}/
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    │       ├── __init__.py
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>    │       ├── main.py
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>    │       └── py.typed
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    └── tests/
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>        ├── __init__.py
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>        ├── conftest.py
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>        └── test_main.py.jinja
+</span></code></pre></div>
+<p>Every file that has a <code>.jinja</code> extension needs to have one of the 5 values injected into it. Additionally, the root
+folder should use the selected <code>project_name</code>, and the module in the <code>src</code> directory should use the <code>module_name</code>.</p>
+<h3 id="making-a-templated-file">Making a templated file</h3>
+<p>To show how Jinja template variable injections work, check out the internals of one of the templated files:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">QA on push</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nt">run-name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qa-checks</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nt">on</span><span class="p">:</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="p p-Indicator">]</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="p p-Indicator">]</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="nt">strategy</span><span class="p">:</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">      </span><span class="nt">matrix</span><span class="p">:</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">        </span><span class="nt">python-version</span><span class="p">:</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">          </span><span class="p p-Indicator">{</span><span class="err">%</span><span class="w"> </span><span class="nv">for ver in python_versions -%</span><span class="p p-Indicator">}</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">ver</span><span class="nv"> </span><span class="s">}}&#39;</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">          </span><span class="p p-Indicator">{</span><span class="err">%</span><span class="w"> </span><span class="nv">endfor %</span><span class="p p-Indicator">}</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout repository</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install uv</span>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">astral-sh/setup-uv@v5</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install python</span>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">uv python install {{ &quot;${{ matrix.python-version }}&quot; }}</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check Quality</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">make qa</span>
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload coverage reports to Codecov</span>
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">codecov/codecov-action@v5</span>
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="w">        </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.coverage.xml</span>
+</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a><span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="s">&quot;${{</span><span class="nv"> </span><span class="s">secrets.CODECOV_TOKEN</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a><span class="w">      </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="s">&quot;${{</span><span class="nv"> </span><span class="s">!cancelled()</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span><span id="__span-12-38"><a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a>
+</span><span id="__span-12-39"><a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload test results to Codecov</span>
+</span><span id="__span-12-40"><a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">codecov/test-results-action@v1</span>
+</span><span id="__span-12-41"><a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-12-42"><a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a><span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="s">&quot;${{</span><span class="nv"> </span><span class="s">secrets.CODECOV_TOKEN</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span><span id="__span-12-43"><a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a><span class="w">        </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.junit.xml</span>
+</span><span id="__span-12-44"><a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a><span class="w">      </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="s">&quot;${{</span><span class="nv"> </span><span class="s">!cancelled()</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span></code></pre></div>
+<p>There's a few interesting things to take note of here. First, you can see that we are using the <code>python_versions</code> from
+before to tell the GitHub action the matrix of versions to use in the test runs. It will create a separate run of the
+test job for every version that was selected before.</p>
+<p>Note down in the "Install python" step, there's something wild going on. In a vanilla GitHub action YAML file, this
+section would look like:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install python</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">uv python install ${{ matrix.python-version }}</span>
+</span></code></pre></div>
+<p>However, because it's a <em>Jinja</em> file now, double curly braces mean something special. Consequently, we need to escape
+the existing double curly braces. The Jinja way to do this is to make the original double curly expression a string and
+surround it <em>again</em> with double curlies. It's ugly, but it gets the job done:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install python</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">uv python install {{ &quot;${{ matrix.python-version }}&quot; }}</span>
+</span></code></pre></div>
+<h3 id="creating-a-template-folder">Creating a template folder</h3>
+<p>By default, <code>copier</code> expects the templated project files to live in the same directory as <code>copier.yaml</code>. However,
+because I have lots of <em>other</em> files that I want as a part of my template project, that wasn't going to work for me.
+Fortunately, <code>copier</code> allows you to identify a different
+<a href="https://copier.readthedocs.io/en/stable/configuring/#subdirectory">subdirectory</a> that holds your template. So, I
+packaged up the whole project structure in a <code>template</code> subdirectory and updated my <code>copier.yaml</code> file to include a
+subdirectory section like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">_subdirectory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+</span></code></pre></div>
+<h3 id="generating-a-new-project">Generating a new project</h3>
+<p>Now that everything is in place, it was time to generate a new project. So, I kicked off copier with the following
+command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>uv<span class="w"> </span>run<span class="w"> </span>copier<span class="w"> </span>copy<span class="w"> </span>.<span class="w"> </span>..
+</span></code></pre></div>
+<p>Basically, I was telling <code>copier</code> to create the new project using the template defined in the current directory.
+Additionally, I wanted the new project to be created in the parent of my template project. Thus, the new project live in
+a sibling folder of my template project's root.</p>
+<p>Next, I ran through the questionnaire as follows:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>🎤 What is the name of the project?
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>   space-monkey
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>🎤 Provide a short summary of the project.
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>   It&#39;s a trial run
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>🎤 What is the Python module name?
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>   space_monkey
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>🎤 What Python versions will be supported?
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>   done (3 selections)
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>🎤 What is the default Python version to use?
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>   3.13
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>Copying from template version 0.0.0.post3.dev0+c69bc53
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>    create  space-monkey
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>    create  space-monkey/.python-version
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>    create  space-monkey/src
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>    create  space-monkey/src/space_monkey
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>    create  space-monkey/src/space_monkey/main.py
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    create  space-monkey/src/space_monkey/__init__.py
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>    create  space-monkey/src/space_monkey/py.typed
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>    create  space-monkey/.gitignore
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>    create  space-monkey/tests
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    create  space-monkey/tests/test_main.py
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>    create  space-monkey/tests/conftest.py
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>    create  space-monkey/tests/__init__.py
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>    create  space-monkey/Makefile
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>    create  space-monkey/CHANGELOG.md
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>    create  space-monkey/docs
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>    create  space-monkey/docs/mkdocs.yaml
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>    create  space-monkey/docs/source
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>    create  space-monkey/docs/source/features.md
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a>    create  space-monkey/docs/source/index.md
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a>    create  space-monkey/docs/source/reference.md
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a>    create  space-monkey/docs/source/quickstart.md
+</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a>    create  space-monkey/.github
+</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a>    create  space-monkey/.github/workflows
+</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a>    create  space-monkey/.github/workflows/deploy.yml
+</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a>    create  space-monkey/.github/workflows/main.yml
+</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a>    create  space-monkey/.github/workflows/docs.yml
+</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a>    create  space-monkey/README.md
+</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a>    create  space-monkey/LICENSE.md
+</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a>    create  space-monkey/pyproject.toml
+</span></code></pre></div>
+<p>GREAT! It worked! Now I have a new Python project that includes all the scaffolding I like to have, and it's ready to
+build on.</p>
+<p>However, this doesn't fix the pain of having to set up git and GitHub. I still would have to do those manual steps to
+complete the process.</p>
+<p>So, I decided to investigate if I those steps could be automated as well.</p>
+<div class="admonition warning">
+<p class="admonition-title">SPOILER ALERT</p>
+<p>They could be automated!</p>
+</div>
+<h3 id="automating-github-deployment-with-tasks">Automating GitHub Deployment with Tasks</h3>
+<p>With the Python project setup all automated, I needed to find out what I could do about automating the manual steps that
+are needed to roll the project out to GitHub. Remember that in the <a href="#processes">Processes</a> section, I described 3 manual
+steps that I needed to perform in order to get a new project up on GitHub:</p>
+<ol>
+<li>Initialize the git repo</li>
+<li>Host it on GitHub</li>
+<li>Set up a GitHub Page</li>
+</ol>
+<p>All these steps happen <em>after</em> the project is functional in its MVP form and ready to make public. So, I dug deeper into
+<code>copier</code> to see what it offered for automating steps like this.</p>
+<p>It turns out that <code>copier</code> supports <a href="https://copier.readthedocs.io/en/latest/configuring/#tasks">tasks</a> that run after
+the project is generated. This fit my needs perfectly! However, in reading the docs on <code>_tasks</code>, something <a href="https://copier.readthedocs.io/en/latest/configuring/#unsafe">pretty
+important</a> jumped out:</p>
+<blockquote>
+<p>Copier templates can use dangerous features that allow arbitrary code execution:</p>
+<ul>
+<li>Jinja extensions</li>
+<li>Migrations</li>
+<li>Tasks</li>
+</ul>
+<p>Therefore, these features are disabled by default and Copier will raise an error (and exit from the CLI with code 4)
+when they are found in a template. In this case, please verify that no malicious code gets executed by any of the used
+features. When you're sufficiently confident or willing to take the risk, set unsafe=True or pass the CLI switch
+--UNSAFE or --trust.</p>
+</blockquote>
+<p>This <em>sounds</em> pretty scary, BUT! I am building this project template for my own use. I <em>think</em> I can trust executable
+code that I wrote myself--though sometimes I wonder! All I needed to add to take advantage of the <code>_tasks</code> directive was
+a <code>--trust</code> flag in the <code>copier</code> command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>uv<span class="w"> </span>run<span class="w"> </span>copier<span class="w"> </span>copy<span class="w"> </span>--trust<span class="w"> </span>.<span class="w"> </span>..
+</span></code></pre></div>
+<p>With that handled, I worked on my tasks next.</p>
+<h4 id="task-1-make-sure-the-project-works">Task 1: Make sure the project <em>works</em></h4>
+<p>I decided that it would be really nice to make sure that the project is actually working as expected before I pulbished
+it on GitHub. Since I already added commands for linting, unit tests, and type-checks to my <code>Makefile</code>, I could verify
+that the basics in the project work with a single command: <code>make qa</code>. I added this to the <code>_tasks</code> section with a single
+command:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">_tasks</span><span class="p">:</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;make</span><span class="nv"> </span><span class="s">qa&quot;</span>
+</span></code></pre></div>
+<p>Notice that this command sets the working directory to the <code>project_name</code>. That meant that this command is actually
+executed in the generated project. I don't need to make the directory path <em>relative</em> to the path where I run the
+command because I have already directed <code>copier</code> to execute the template in the <em>parent</em> directory of the template
+project (remember the <code>..</code>). Thus, the command will be executed exactly where I wanted. I took the new task for a spin:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>🎤 What is the name of the project?
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>   space-monkey
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>🎤 Provide a short summary of the project.
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>   It&#39;s a trial run
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>🎤 What is the Python module name?
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>   space_monkey
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>🎤 What Python versions will be supported?
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>   done (3 selections)
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>🎤 What is the default Python version to use?
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>   3.13
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>Copying from template version 0.0.0.post3.dev0+4a481f3
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>...
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a> &gt; Running task 1 of 1: make qa
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>make[1]: Entering directory &#39;/home/dusktreader/git-repos/personal/space-monkey&#39;
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>uv run pytest
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>...
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>tests/test_main.py .                                                                                                                                                                                         [100%]
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>...
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>uv run ruff check src/space_monkey tests
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>All checks passed!
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>uv run mypy src/space_monkey tests --pretty
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>uv run basedpyright src/space_monkey tests
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>Success: no issues found in 5 source files
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>0 errors, 0 warnings, 0 notes
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>echo &quot;All quality checks pass!&quot;
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>All quality checks pass!
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>make[1]: Leaving directory &#39;/home/dusktreader/git-repos/personal/space-monkey&#39;
+</span></code></pre></div>
+<p>I omitted some output (...) here to make save some space. Still, you can see that it ran my QA checks after generating
+the project and all of the checks passed. Great! Now I'm confident that the generated project had a baseline of
+functinoality.</p>
+<h4 id="task-2-6-initialize-the-git-repository">Task 2-6: Initialize the git repository</h4>
+<p>The next series of tasks covered the manual steps I described to <a href="#git-init">initialize the git repository</a>. These steps
+are really easy to define in tasks:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">init</span><span class="nv"> </span><span class="s">.&quot;</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">add</span><span class="nv"> </span><span class="s">README.md&quot;</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">commit</span><span class="nv"> </span><span class="s">-m</span><span class="nv"> </span><span class="s">&#39;Initial</span><span class="nv"> </span><span class="s">Commit&#39;&quot;</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">add</span><span class="nv"> </span><span class="s">.&quot;</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">commit</span><span class="nv"> </span><span class="s">-m</span><span class="nv"> </span><span class="s">&#39;feat:</span><span class="nv"> </span><span class="s">Bootstrapped</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">project&#39;&quot;</span>
+</span></code></pre></div>
+<p>There's not much to comment on here other than the nicety of including the templated <code>project_name</code> value in the first
+git commit message. The output from this steps (with some stuff removed) looked like this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a> &gt; Running task 2 of 6: git init .
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>Initialized empty Git repository in /home/dusktreader/git-repos/personal/space-monkey/.git/
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a> &gt; Running task 3 of 6: git add README.md
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a> &gt; Running task 4 of 6: git commit -m &#39;Initial Commit&#39;
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>[main (root-commit) 4106d13] Initial Commit
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a> 1 file changed, 29 insertions(+)
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a> create mode 100644 README.md
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a> &gt; Running task 5 of 6: git add .
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a> &gt; Running task 6 of 6: git commit -m &#39;feat: Bootstrapped the space-monke`y project&#39;
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>[main d830fcb] feat: Bootstrapped the space-monkey project
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a> 21 files changed, 1339 insertions(+)
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a> ...
+</span></code></pre></div>
+<p>Now, I was really getting somewhere on automating boring steps!</p>
+<h4 id="task-7-8-create-the-project-on-github">Task 7 &amp; 8: Create the project on GitHub</h4>
+<p>For the next two steps, I needed to be able to interact with GitHub from the command-line. Fortunately, GitHub had a
+very powerful CLI available that can do it all! I just had to install it. The installation wasn't <em>super</em> clean,
+but after following the <a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md">instructions in the docs</a>, I had
+GitHub CLI up and running. Next, I needed to login through the CLI to my GitHub account:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>gh<span class="w"> </span>auth<span class="w"> </span>login
+</span></code></pre></div>
+<p>After following the steps to complete
+<a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/device-authorization-flow">device authorization flow</a>,
+I was fully logged in.</p>
+<p>Next, I defined the steps to create the project on GitHub and push my <code>main</code> branch to the new origin.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>  - working_directory: &quot;{{ project_name }}&quot;
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    command: &quot;gh repo create --description=\&quot;{{ project_summary }}\&quot; --source=. --public {{ project_name }}&quot;
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>  - working_directory: &quot;{{ project_name }}&quot;
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    command: &quot;git push -u origin main&quot;
+</span></code></pre></div>
+<p>The <code>create</code> command is really straightforward, and it's nice that I could use the <code>project_summary</code> as the project
+description on GitHub. Executing the tasks looked like this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a> &gt; Running task 7 of 8: gh repo create --description=&quot;It&#39;s a trial run&quot; --source=. --public space-monkey
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>2025/04/06 11:28:35.534717 cmd_run.go:1285: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: connection refused
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>✓ Created repository dusktreader/space-monkey on GitHub
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>✓ Added remote git@github.com:dusktreader/space-monkey.git
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a> &gt; Running task 8 of 8: git push -u origin main
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>Enumerating objects: 30, done.
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>Counting objects: 100% (30/30), done.
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>Delta compression using up to 8 threads
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>Compressing objects: 100% (23/23), done.
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>Writing objects: 100% (30/30), 30.07 KiB | 2.15 MiB/s, done.
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>Total 30 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>remote: Resolving deltas: 100% (1/1), done.
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>To github.com:dusktreader/space-monkey.git
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a> * [new branch]      main -&gt; main
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>branch &#39;main&#39; set up to track &#39;origin/main&#39;.
+</span></code></pre></div>
+<p>When I went to check the repo on GitHub, I could see that it was all set up!</p>
+<figure>
+<p><img align="center" alt="space-monkey on GitHub" src="../../../../images/2025-04-06--space-monkey-1.png" /></p>
+<figcaption>
+<p>space-monkey now on GitHub!</p>
+</figcaption>
+</figure>
+<figure>
+<p><img align="center" alt="about space-monkey" src="../../../../images/2025-04-06--space-monkey-2.png" /></p>
+<figcaption>
+<p>about section has the summary</p>
+</figcaption>
+</figure>
+<figure>
+<p><img align="center" alt="space-monkey README" src="../../../../images/2025-04-06--space-monkey-3.png" /></p>
+<figcaption>
+<p>space-monkey README</p>
+</figcaption>
+</figure>
+<p>And, when I checked the Actions, I verified that the docs build succeeded as well:</p>
+<figure>
+<p><img align="center" alt="space-monkey build-docs action" src="../../../../images/2025-04-06--space-monkey-4.png" /></p>
+<figcaption>
+<p>space-monkey build-docs action</p>
+</figcaption>
+</figure>
+<p>However, the GitHub Pages site for the docs was not built yet, because it wasn't configured as I described in
+the <a href="#github-pages">GitHub Pages section</a>. So, I needed a few more actions to make that happen.</p>
+<h4 id="task-9-11-publish-the-github-page">Task 9-11: Publish the GitHub Page</h4>
+<p>Figuring out how to configure my repo to publish the GitHub Pages site took some digging. I found that this
+functionality isn't actually built in to the GitHub CLI directly. However, the CLI does allow you to call any API
+endpoint provided by GitHub! Once I learned that, it was only a matter of finding the endpoint and learning how to call
+it. The complete CLI command looked like this (I've broken it up into several lines to make it easier to read):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>gh<span class="w"> </span>api<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span>--method<span class="o">=</span>POST<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Accept: application/vnd.github+json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">  </span><span class="s2">&quot;/repos/dusktreader/so-dumb/pages&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;source[branch]=gh-pages&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;source[path]=/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;build_type=legacy&quot;</span>
+</span></code></pre></div>
+<p>It worked, but I quickly realized there was a problem. This command will <em>only</em> work after the GitHub action to build
+the docs is completed. That action <em>creates</em> a new branch in the repo called <code>gh-pages</code> where the built docs are staged.
+If you try to run the GitHub API command before that branch exists, it will fail.</p>
+<p>So, I needed to make sure that the <code>build-docs</code> action completed before I ran the command. That took even <em>more</em>
+digging, but I was able to figure out how to do it in two steps:</p>
+<ol>
+<li>Wait for the <code>build-docs</code> action to start</li>
+<li>Once it's started, wait for it to complete</li>
+</ol>
+<p>After refining those steps into tasks, my YAML looked like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">      </span><span class="no">while [ -z &quot;$(gh run list --json databaseId,name | jq &#39;.[] | select(.name == &quot;build-docs&quot;)&#39;)&quot; ]; do</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">        </span><span class="no">echo &quot;Waiting for docs build action to start&quot; &amp;&amp; sleep 1;</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">      </span><span class="no">done</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">      </span><span class="no">gh run list --json databaseId,name</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">      </span><span class="no">| jq &#39;.[] | select(.name == &quot;build-docs&quot;)&#39;</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">      </span><span class="no">| jq &#39;.databaseId&#39;</span>
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="w">      </span><span class="no">| xargs gh run watch --exit-status</span>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="w">      </span><span class="no">gh api</span>
+</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">      </span><span class="no">--silent</span>
+</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">      </span><span class="no">--method=POST</span>
+</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a><span class="w">      </span><span class="no">-H &quot;Accept: application/vnd.github+json&quot;</span>
+</span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a><span class="w">      </span><span class="no">&quot;/repos/dusktreader/{{ project_name }}/pages&quot;</span>
+</span><span id="__span-27-19"><a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a><span class="w">      </span><span class="no">-f &quot;source[branch]=gh-pages&quot;</span>
+</span><span id="__span-27-20"><a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a><span class="w">      </span><span class="no">-f &quot;source[path]=/&quot;</span>
+</span><span id="__span-27-21"><a id="__codelineno-27-21" name="__codelineno-27-21" href="#__codelineno-27-21"></a><span class="w">      </span><span class="no">-f &quot;build_type=legacy&quot;</span>
+</span></code></pre></div>
+<p>Once I had the tasks in place, running it produced this output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a> &gt; Running task 9 of 10: while [ -z &quot;$(gh run list --json databaseId,name | jq &#39;.[] | select(.name == &quot;build-docs&quot;)&#39;)&quot; ]; do
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>  echo &quot;Waiting for docs build action to start&quot; &amp;&amp; sleep 1;
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>done
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>Waiting for docs build action to start
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>Waiting for docs build action to start
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>Waiting for docs build action to start
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a> &gt; Running task 10 of 10: gh run list --json databaseId,name | jq &#39;.[] | select(.name == &quot;build-docs&quot;)&#39; | jq &#39;.databaseId&#39; | xargs gh run watch --exit-status
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>Refreshing run status every 3 seconds. Press Ctrl+C to quit.
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>✓ main build-docs · 14295750274
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>Triggered via push less than a minute ago
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>JOBS
+</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>✓ build in 12s (ID 40062668601)
+</span><span id="__span-28-17"><a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a>  ✓ Set up job
+</span><span id="__span-28-18"><a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a>  ✓ Checkout repository
+</span><span id="__span-28-19"><a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a>  ✓ Install uv
+</span><span id="__span-28-20"><a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a>  ✓ Set up Python
+</span><span id="__span-28-21"><a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>  ✓ Build Documentation
+</span><span id="__span-28-22"><a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a>  ✓ Deploy documentation
+</span><span id="__span-28-23"><a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a>  ✓ Post Install uv
+</span><span id="__span-28-24"><a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a>  ✓ Post Checkout repository
+</span><span id="__span-28-25"><a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a>  ✓ Complete job
+</span><span id="__span-28-26"><a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>
+</span><span id="__span-28-27"><a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a>✓ Run build-docs (14295750274) completed with &#39;success&#39;
+</span><span id="__span-28-28"><a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a> &gt; Running task 11 of 11: gh api --method=POST -H &quot;Accept: application/vnd.github+json&quot; &quot;/repos/dusktreader/space-monkey/pages&quot; -f &quot;source[branch]=gh-pages&quot; -f &quot;source[path]=/&quot; -f &quot;build_type=legacy&quot;
+</span></code></pre></div>
+<p>That's it! My project is now available on GitHub and the docs page is also built...well, not yet actually. The page
+wasn't deployed yet because the final GitHub action named "pages build and deployment" had to finish first. So, I
+decided to add one last finishing touch.</p>
+<h4 id="task-12-14-wrapping-it-up">Task 12-14: Wrapping it up</h4>
+<p>For this final step, I just needed to add another task to wait for the page deployment to complete. I also wanted to add
+a message at the end confirming that the tasks completed successfully and include a URL to the new GitHub repo so that I
+could open it with a click. The final tasks looked like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">      </span><span class="no">while [ -z &quot;$(gh run list --json databaseId,name | jq &#39;.[] | select(.name == &quot;pages build and deployment&quot;)&#39;)&quot; ]; do</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">        </span><span class="no">echo &quot;Waiting for page deploy action to start&quot; &amp;&amp; sleep 1;</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">      </span><span class="no">done</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">      </span><span class="no">gh run list --json databaseId,name</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">      </span><span class="no">| jq &#39;.[] | select(.name == &quot;pages build and deployment&quot;)&#39;</span>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="w">      </span><span class="no">| jq &#39;.databaseId&#39;</span>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">      </span><span class="no">| xargs gh run watch --exit-status</span>
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">working_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="w">      </span><span class="no">echo &quot;Finished bootstrapping {{ project_name }}!&quot; &amp;&amp;</span>
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="w">      </span><span class="no">echo &quot;Check it out at https://github.com/dusktreader/{{ project_name }}&quot;</span>
+</span></code></pre></div>
+<p>This produced output from <code>copier</code> that looked like this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a> &gt; Running task 12 of 14: while [ -z &quot;$(gh run list --json databaseId,name | jq &#39;.[] | select(.name == &quot;pages build and deployment&quot;)&#39;)&quot; ]; do
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>  echo &quot;Waiting for page deploy action to start&quot; &amp;&amp; sleep 1;
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>done
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>Waiting for docs build action to start
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>Waiting for docs build action to start
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>Waiting for docs build action to start
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a> &gt; Running task 13 of 14: gh run list --json databaseId,name | jq &#39;.[] | select(.name == &quot;pages build and deployment&quot;)&#39; | jq &#39;.databaseId&#39; | xargs gh run watch --exit-status
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>Refreshing run status every 3 seconds. Press Ctrl+C to quit.
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>✓ gh-pages pages build and deployment · 14295984823
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>Triggered via dynamic less than a minute ago
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>JOBS
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>✓ build in 7s (ID 40063197951)
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>  ✓ Set up job
+</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>  ✓ Checkout
+</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>  ✓ Upload artifact
+</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>  ✓ Post Checkout
+</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>  ✓ Complete job
+</span><span id="__span-30-21"><a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>✓ report-build-status in 3s (ID 40063199711)
+</span><span id="__span-30-22"><a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a>  ✓ Set up job
+</span><span id="__span-30-23"><a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>  ✓ Report Build Status
+</span><span id="__span-30-24"><a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a>  ✓ Complete job
+</span><span id="__span-30-25"><a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a>✓ deploy in 10s (ID 40063199712)
+</span><span id="__span-30-26"><a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a>  ✓ Set up job
+</span><span id="__span-30-27"><a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a>  ✓ Deploy to GitHub Pages
+</span><span id="__span-30-28"><a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a>  ✓ Complete job
+</span><span id="__span-30-29"><a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a>
+</span><span id="__span-30-30"><a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a>✓ Run pages build and deployment (14295984823) completed with &#39;success&#39;
+</span><span id="__span-30-31"><a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a> &gt; Running task 14 of 14: echo &quot;Finished bootstrapping space-monkey!&quot; &amp;&amp; echo &quot;Check it out at https://github.com/dusktreader/space-monkey&quot;
+</span><span id="__span-30-32"><a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a>
+</span><span id="__span-30-33"><a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a>Finished bootstrapping space-monkey!
+</span><span id="__span-30-34"><a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a>Check it out at https://github.com/dusktreader/space-monkey
+</span></code></pre></div>
+<p>Excellent! I clicked on the URL at the end and checked out the docs:</p>
+<figure>
+<p><img align="center" alt="space-monkey docs" src="../../../../images/2025-04-06--space-monkey-docs.png" /></p>
+<figcaption>
+<p>space-monkey docs page!</p>
+</figcaption>
+</figure>
+<p>There they were! After all that work, my template project was ready to stamp out new Python projects!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>My template project was pretty much complete at this point. It could produce a mostly empty Python
+project, but all of the scaffolding was complete and the project was published on GitHub.</p>
+<p>Running the whole process took just over a minute:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>real    1m15.743s
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>user    0m8.678s
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>sys     0m2.462s
+</span></code></pre></div>
+<p>I am really happy with how this turned out. Still, I don't think the template project is 100% done yet. In particular,
+there are a few things I'd like to improve in it:</p>
+<ol>
+<li>Cleaning up some of the output so it's not so noisy</li>
+<li>Encapsulating the GitHub CLI commands in scripts to make the YAML more concise</li>
+<li>Figuring out how to seed the list of python versions with a reusable variable</li>
+<li>Making the GitHub user account a question so other people can use the template more easily</li>
+<li>Adding some optional components so I can bootstrap CLI apps vs API apps</li>
+<li>Configuring GitHub to set the URL of the docs page in the "About" section</li>
+</ol>
+<p>This is a solid start, though, and definitely a tool that I will find really useful for future Python projects.</p>
+<p>If you are interested in the nitty-gritty details of the template, please check out my
+<a href="https://github.com/dusktreader/dusky-clone">dusky-clone</a> project on GitHub. Comments, issues, and PRs are always
+welcome.</p>
+<p>Before I take off, I'd like to thank the <a href="https://github.com/copier-org/copier?tab=readme-ov-file#credits">maintiners</a>
+of <code>copier</code> for creating such a great template builder. It really was a joy to work with!</p>
+<p>So, what do you think? Let me know below in the comments.</p>
+<p>Thanks for reading!</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+  <h2 id="__comments">Comments</h2>
+
+  <script src="https://giscus.app/client.js"
+          data-repo="dusktreader/blog"
+          data-repo-id="R_kgDOOQ5SlA"
+          data-category="General"
+          data-category-id="DIC_kwDOOQ5SlM4Coli_"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../../03/29/self-contained-python-scripts-with-uv/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Self-contained Python scripts with uv">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Self-contained Python scripts with uv
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.expand", "navigation.footer", "navigation.tracking", "navigation.footer", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
