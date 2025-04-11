@@ -16,7 +16,7 @@ comments: true
 !!! tip "TLDR"
 
     I used [`copier`](https://copier.readthedocs.io/en/stable/) to create a [python project
-    template](https://github.com/dusktreader/dusky-clone) that includes logic to deploy the project to GitHub.
+    template](https://github.com/dusktreader/xerox-python) that includes logic to deploy the project to GitHub.
 
 I tend to create a lot of Python projects of various sizes. In the past few weeks, this has been even more frequent.
 Just a few days ago, I started a new project called [drivel](https://github.com/dusktreader/drivel). It is a
@@ -1186,7 +1186,7 @@ there are a few things I'd like to improve in it:
 This is a solid start, though, and definitely a tool that I will find really useful for future Python projects.
 
 If you are interested in the nitty-gritty details of the template, please check out my
-[dusky-clone](https://github.com/dusktreader/dusky-clone) project on GitHub. Comments, issues, and PRs are always
+[xerox-python](https://github.com/dusktreader/xerox-python) project on GitHub. Comments, issues, and PRs are always
 welcome.
 
 Before I take off, I'd like to thank the [maintiners](https://github.com/copier-org/copier?tab=readme-ov-file#credits)
