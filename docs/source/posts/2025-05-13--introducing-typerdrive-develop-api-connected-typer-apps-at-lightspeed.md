@@ -9,15 +9,15 @@ categories:
 - dev
 ---
 
-# Introducing Typerdrive: Boost your command-line workflows to lightspeed
+# Introducing Typerdrive: Develop API-Connected Typer Apps at Lightspeed
 
 !!! tip "TLDR"
     I created a package to extend Typer with some great features for building CLIs that communicate with APIs.
 
-During my time as an engineer working primarily with Python, I've written a a fair number of CLIs. One type of project
-that has been popping up for me a lot lately involves writing CLI programs that interface with RESTful APIs. These are
-pretty common these days with so many service companies offering fully operational battlestations...I mean, platforms
-that can be accessed via API.
+During my time as an engineer working primarily with Python, I've written a a fair number of CLIs powered by
+[Typer](https://typer.tiangolo.com){target="blank"}. One type of project that has been popping up for me a lot lately
+involves writing CLI programs that interface with RESTful APIs. These are pretty common these days with so many service
+companies offering fully operational battlestations...I mean, platforms that can be accessed via API.
 
 I've established some pretty useful and re-usable patterns in building these kinds of apps, and I keep finding new
 ways to improve both the developer experience and the user experience. Every time I go about porting some feature
@@ -66,8 +66,8 @@ this setup as easy as possible, I'm using a FastAPI instance secured with
     I wrote `armasec`, so my opinion on how easy it is to use is probably a bit biased.
 
 So, to prepare things for this app, I followed the instructions here to set up
-[Auth0](https://auth0.com){target="blank"} with `armasec` as documented in [this
-guide](https://omnivector-solutions.github.io/armasec/tutorials/getting_started_with_auth0/){target="blank"}.
+[Auth0](https://auth0.com){target="blank"} with `armasec` as documented in
+[this guide](https://omnivector-solutions.github.io/armasec/tutorials/getting_started_with_auth0/){target="blank"}.
 
 To keep things lean and simple, I skipped the steps involved with setting up
 [RBAC](https://auth0.com/docs/manage-users/access-control/rbac){target="blank"}. Enabling RBAC won't _hurt_ anything,
