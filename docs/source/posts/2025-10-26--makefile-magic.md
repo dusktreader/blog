@@ -14,9 +14,10 @@ categories:
 !!! tip "TLDR"
     I have a cool structure, nice convenience functions, and flashy magic that "makes" my projects pretty awesome!
 
-For a long time, now, I've been including a `Makefile` in all of my projects. It's a nice way to provide access to
-actions that need to be done over-and-over in a software project. It's familiar (to most folks), works on almost
-any reasonable dev environment out-of-the box, and makes getting started on the project really straightforward.
+For a fairlylong time, now, I've been including a `Makefile` in all of my projects. It's a nice way to provide
+access to actions that need to be done over-and-over in a software project. It's familiar (to most folks), works
+on almost any reasonable dev environment out-of-the box, and makes getting started on the project really
+straightforward.
 
 Over the years, I've developed a lot of cool stuff that I like to include in my `Makefiles`. This ranges from some
 basic patterns and structures that I've found helpful to some fancy "magic" that makes it nice to work with.
