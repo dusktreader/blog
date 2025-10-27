@@ -1,0 +1,1168 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://blog.dusktreader.dev/2025/10/26/makefile-magic/">
+      
+      
+        <link rel="prev" href="../../../05/13/introducing-typerdrive-develop-api-connected-typer-apps-at-lightspeed/">
+      
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Makefile magic - the.dusktreader blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#makefile-magic" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="the.dusktreader blog" class="md-header__button md-logo" aria-label="the.dusktreader blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            the.dusktreader blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Makefile magic
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dusktreader/blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="the.dusktreader blog" class="md-nav__button md-logo" aria-label="the.dusktreader blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    the.dusktreader blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dusktreader/blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Posts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2025/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/dev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dev
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/dev-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dev-tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-make" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why make?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#its-been-a-long-road" class="md-nav__link">
+    <span class="md-ellipsis">
+      It's been a long road
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sections-and-basic-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sections and basic targets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targets-with-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targets with prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targets-with-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targets with patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targets-that-use-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targets that use variables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targets-with-guards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targets with guards
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Targets with guards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure-exists-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ensure exists guard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valid-pattern-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Valid pattern guard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valid-variable-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Valid variable guard
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targets-requiring-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targets requiring confirmation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-stuff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other stuff
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other stuff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phony-specifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      .PHONY specifiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell-vars" class="md-nav__link">
+    <span class="md-ellipsis">
+      SHELL vars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default target
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://github.com/dusktreader.png" alt="Tucker Beck">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://cv.dusktreader.dev">Tucker Beck</a>
+                        
+                      </strong>
+                      <br>
+                      Creator
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-10-26 00:00:00+00:00" class="md-ellipsis">October 26, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/dev-tools/">dev-tools</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              9 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">make</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="makefile-magic">Makefile magic</h1>
+<div class="admonition tip">
+<p class="admonition-title">TLDR</p>
+<p>I have a cool structure, nice convenience functions, and flashy magic that "makes" my projects pretty awesome!</p>
+</div>
+<p>For a fairlylong time, now, I've been including a <code>Makefile</code> in all of my projects. It's a nice way to provide
+access to actions that need to be done over-and-over in a software project. It's familiar (to most folks), works
+on almost any reasonable dev environment out-of-the box, and makes getting started on the project really
+straightforward.</p>
+<p>Over the years, I've developed a lot of cool stuff that I like to include in my <code>Makefiles</code>. This ranges from some
+basic patterns and structures that I've found helpful to some fancy "magic" that makes it nice to work with.</p>
+<p>Today, I decided to create a <a href="https://github.com/dusktreader/Makefile">GitHub repo</a> to showcase these patterns in
+a few example <code>Makefile</code> entries. I thought it might be nice to talk through what's offered there and explain some
+of the deeper magic.</p>
+<!-- more -->
+
+<h2 id="why-make">Why <code>make</code>?</h2>
+<p>I will be the <em>first</em> to admit that the syntax and structure of <code>Makefiles</code> is <em>awful</em>. It feels very dated, it's
+not obvious at all to newcomers, and its scope doesn't really match most modern projects that aren't building
+C and C++ apps.</p>
+<p>Well, the first reason is that <code>make</code> is ubiquitous. I work almost exclusively in Unix-like environments, and it's
+a good bet that these systems will have <code>make</code> already when I log in for the first time.</p>
+<p>Now, almost all modern projects have some sort of dependencies that you will have to download and install before
+you can start working. Still, there's something comforting about having a bit of project management software that
+works <em>right away</em> without having to do anything else.</p>
+<p>The last big reason, for me, is that it's truly cross platform and multi-lingual. I really <em>hate</em> having to install
+some <code>npm</code> package to get started on a Python project. Conversely, I don't want to have to install a Python
+application to operate project management for a Node project. It just feels...off to me.</p>
+<p>So, forget all that. Use <code>make</code> and just get to work!</p>
+<h2 id="its-been-a-long-road">It's been a long road</h2>
+<p>My first exposure to <code>Makefile</code> was a couple of decades ago in my <code>Software Engineering Tools</code> class that was a
+required course for my University's (Go <a href="https://wsu.edu">Cougs</a>!) Computer Science program at the time. The
+curriculum was entirely Linux-based, and we were taught how to use a lot of tools involved in working in a Linux
+development environment circa 2005. One of these was obviously <code>make</code>.</p>
+<p>At the time, the program's foundation was C++ development. I was broke as hell, so getting a Visual Studio license
+was pretty much out of the question. Plus, I was determined to learn how to be efficient in Linux. Thus, I
+embraced <code>make</code> and the Linux tool-chain for building C++ apps.</p>
+<p>These days, I don't really write any C or C++. Still, I find the familiarity and convenience of <code>Makefile</code>
+comforting and efficient for my daily workflows.</p>
+<p>Enough about ancient history, lets dig into the <code>Makefile</code> examples and see my cool stuff!</p>
+<h2 id="sections-and-basic-targets">Sections and basic targets</h2>
+<p>One of the first things I've found essential over the years is organizing the <code>Makefile</code> by sections.
+Without it, the file becomes an impenetrable mess of targets without any rhyme or reason to the ordering.</p>
+<p>So, I like to break it up into sections. I designate sections of my <code>Makefile</code> like this:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c">## ==== Basic targets ==================================================================================================</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nf">basic</span><span class="o">:</span><span class="w"> </span><span class="c">## Just a basic target with nothing fancy</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>@echo<span class="w"> </span>Executing<span class="w"> </span>basic<span class="w"> </span>target
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nf">simple</span><span class="o">:</span><span class="w"> </span><span class="c">## Just a simple target that&#39;s very straightforward</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span>@echo<span class="w"> </span>Executing<span class="w"> </span>simple<span class="w"> </span>target
+</span></code></pre></div>
+<p>As you'll see later, the <em>format</em> of the section headers is actually significant as are the comments for each of the
+targets. These are used to generate a nicely formatted <code>help</code> output for my <code>Makefile</code>. But, as you can see here, they
+are still very human-readable and helpful when you are navigating the Makefile</p>
+<h2 id="targets-with-prerequisites">Targets with prerequisites</h2>
+<p>A fundamental element of <code>Makefile</code> syntax is specifying <code>prerequisites</code> for a given target. These tell <code>make</code> to only
+run the target if the file or target described by the prereq exists. While this is <code>extremely</code> useful in specifying
+build chains in C++ and C projects, for other projects it can be a nice way to simply say, <em>also</em> run this other
+target whenever I run this one.</p>
+<p>For example, we could provide a simple prereq for a target like this:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nf">basic</span><span class="o">:</span><span class="w"> </span><span class="c">## Just a basic target with nothing fancy</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>@echo<span class="w"> </span>Executing<span class="w"> </span>basic<span class="w"> </span>target
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nf">dependent</span><span class="o">:</span><span class="w"> </span><span class="n">basic</span> <span class="c">## Just a target that will first run basic</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span>@echo<span class="w"> </span>Executing<span class="w"> </span>dependent<span class="w"> </span>target
+</span></code></pre></div>
+<p>Running:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make<span class="w"> </span>dependent
+</span></code></pre></div>
+<p>Will result in output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Executing basic target
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Executing dependent target
+</span></code></pre></div>
+<p>It's important to note that prerequisites can be <em>filenames</em> as well as other targets in the makefile. This can be
+used as a sort of guard to make sure that the target can't be run unless a specific file exists:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nf">migrate-db</span><span class="o">:</span><span class="w"> </span>.<span class="n">env</span>  <span class="c">## Migrate the database (only if .env file has been prepared)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>uv<span class="w"> </span>run<span class="w"> </span>alembic<span class="w"> </span>migrate
+</span></code></pre></div>
+<p>You can read more about prerequisites in the
+<a href="https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html">official <code>make</code> documentation</a>.</p>
+<h2 id="targets-with-patterns">Targets with patterns</h2>
+<p>Now, for C++ and C development, patterns are essential. This lets you specify that each <code>.c</code> file needs to have a
+<code>.o</code> file generated for it. In a C <code>Makefile</code>, you might have a target like:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nf">%.o</span><span class="o">:</span><span class="w"> </span>%.<span class="n">c</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>gcc<span class="w"> </span><span class="k">$(</span>CFLAGS<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+</span></code></pre></div>
+<p>This is gibberish for folks that haven't used <code>make</code> before. It just means, if there isn't a <code>.o</code> file for each <code>.c</code>
+file in the directory, compile one with your specified flags (if any).</p>
+<p>However, for other software projects, patterns can still be a really nice way to control behavior in the target. For
+example, imagine that you want to be able to target different environments with a <code>make</code> command. You can use a
+pattern in the target to specify that.</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nf">publish/%</span><span class="o">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>@bash<span class="w"> </span>publish.sh<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span>
+</span></code></pre></div>
+<p>Here, the <code>%</code> in the target line <code>publish/%</code> is the pattern. In the next line, we can reference the value provided
+in the pattern using <code>$(notdir $@)</code>. This just tells <code>make</code> to use the name of the current target, but leave out the
+"dir" (anything before the final <code>/</code>).</p>
+<p>In this way, running:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make<span class="w"> </span>publish/qa
+</span></code></pre></div>
+<p>Will run the <code>publish.sh</code> script with <code>qa</code> as an argument.</p>
+<p>You can read more about patterns in the
+<a href="https://www.gnu.org/software/make/manual/html_node/Pattern-Rules.html">official <code>make</code> documentation</a>.</p>
+<h2 id="targets-that-use-variables">Targets that use variables</h2>
+<p>Often, I need a target to be provided optional values that change the behavior. In such a case, patterns won't
+actually fit the bill. This is especially true if there are more than one optional variables that might need
+to be passed in. For these sorts of targets, we can use variables.</p>
+<p>Consider a target that can have a <code>--log-level</code> flag provided to the shell command. By default, I want to use
+a sensible log level, but in some cases I may want something more verbose. I could use this pattern to accomplish
+this:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">LOG_LEVEL</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>WARN
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nf">ingest</span><span class="o">:</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span>uv<span class="w"> </span>run<span class="w"> </span>ingest<span class="w"> </span>--log-level<span class="o">=</span><span class="k">$(</span>LOG_LEVEL<span class="k">)</span>
+</span></code></pre></div>
+<p>Here, if I do not provide a <code>LOG_LEVEL</code> value in my <code>make</code> command, the <code>ingest</code> process will default to the
+"WARN" level. However, if I want to be more verbose, I can supply the value for the variables like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>make<span class="w"> </span>ingest<span class="w"> </span><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG
+</span></code></pre></div>
+<p>You can read <em>a lot</em> more about variable management in <code>Makefiles</code> in the
+<a href="https://www.gnu.org/software/make/manual/html_node/Using-Variables.html">official <code>make</code> documentation</a></p>
+<h2 id="targets-with-guards">Targets with guards</h2>
+<p>One type of prerequisite that I've found really useful is a "guard" target that ensures some condition is met
+before executing the command. You can make a guard that checks pretty much anything, but there are three
+that I've found the most useful</p>
+<h3 id="ensure-exists-guard">Ensure exists guard</h3>
+<p>The first is a guard that ensures that some file exists before it will let a target run. This can be
+implemented like so:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nf">_guard_env</span><span class="o">:</span><span class="w">  </span><span class="c"># Ensures a .env file has been prepared</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>@if<span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.env&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;No .env found! Prepare one first according to the README.&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nf">start</span><span class="o">:</span><span class="w"> </span><span class="n">_guard_env</span> <span class="c">## Bring all containers up.</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span></code></pre></div>
+<p>If I run <code>make start</code> before a <code>.env</code> file has been prepared, <code>make</code> will refuse to proceed and tell
+me that I need to set one up.</p>
+<h3 id="valid-pattern-guard">Valid pattern guard</h3>
+<p>The next guard that is useful is a guard that ensures that the supplied pattern is valid for the command.
+This could be implemented as:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">VALID_ENV</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>dev<span class="w"> </span>qa<span class="w"> </span>staging
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nf">_guard_env/%</span><span class="o">:</span><span class="w">  </span><span class="c"># Ensures a valid env is selected (Do not use directly)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span>@if<span class="w"> </span>!<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>VALID_ENV<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;\b</span><span class="k">$(</span>notdir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span><span class="s2">\b&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Invalid ENV:      </span><span class="k">$(</span>RED<span class="k">)$(</span>notdir<span class="w"> </span><span class="nv">$@</span><span class="k">)$(</span>CLEAR<span class="k">)</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Valid ENV values: </span><span class="k">$(</span>GREEN<span class="k">)$(</span>VALID_ENV<span class="k">)$(</span>CLEAR<span class="k">)</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span>echo<span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="nf">migrate/%</span><span class="o">:</span><span class="w"> </span><span class="n">_guard_env</span>/%  <span class="c">## Apply migrations in the database</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span>uv<span class="w"> </span>run<span class="w"> </span>alembic<span class="w"> </span>upgrade<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span>
+</span></code></pre></div>
+<p>With this guard, I can be sure that the target can only be run against the allowed environments. This
+could prevent me from accidentally applying a migration in production!</p>
+<h3 id="valid-variable-guard">Valid variable guard</h3>
+<p>This guard is almost identical to the "Valid pattern guard". However, it checks a supplied variable
+to make sure that it is valid:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">VALID_ENV</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>dev<span class="w"> </span>qa<span class="w"> </span>staging
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">ENV</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>dev
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nf">_guard_env</span><span class="o">:</span><span class="w">  </span><span class="c"># Ensures a valid env is selected (Do not use directly)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span>@if<span class="w"> </span>!<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>VALID_ENV<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;\b</span><span class="k">$(</span>ENV<span class="k">)</span><span class="s2">\b&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Invalid ENV:      </span><span class="k">$(</span>RED<span class="k">)$(</span>ENV<span class="k">)$(</span>CLEAR<span class="k">)</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Valid ENV values: </span><span class="k">$(</span>GREEN<span class="k">)$(</span>VALID_ENV<span class="k">)$(</span>CLEAR<span class="k">)</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">        </span>echo<span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="nf">migrate</span><span class="o">:</span><span class="w"> </span><span class="n">_guard_env</span>  <span class="c">## Apply migrations in the database</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">    </span>uv<span class="w"> </span>run<span class="w"> </span>alembic<span class="w"> </span>upgrade<span class="w"> </span><span class="nv">ENV</span><span class="o">=</span><span class="k">$(</span>ENV<span class="k">)</span>
+</span></code></pre></div>
+<h2 id="targets-requiring-confirmation">Targets requiring confirmation</h2>
+<p>A lot of times, my <code>Makefile</code> will contain some targets that can do irreversible things that I don't
+want to trigger by accident. For these, it's nice to include a confirmation that ensures that I
+<em>really</em> mean to run that target. A confirmation can be defined like this:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nf">_confirm</span><span class="o">:</span><span class="w">  </span><span class="c"># Requires confirmation before proceeding (Do not use directly)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span>@echo<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;Are you sure? [y/N] &quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>ans<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$$</span><span class="o">{</span>ans:-N<span class="o">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>y<span class="w"> </span><span class="o">]</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="nf">tear-down</span><span class="o">:</span><span class="w"> </span><span class="n">_confirm</span>  <span class="c">## Bring down and destroy all containers.</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>--remove-orphans
+</span></code></pre></div>
+<p>When I run <code>make tear-down</code> I will be prompted before the command executes:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>make<span class="w"> </span>tear-down
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Are<span class="w"> </span>you<span class="w"> </span>sure?<span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>--remove-orphans
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="o">[</span>+<span class="o">]</span><span class="w"> </span>Running<span class="w"> </span><span class="m">3</span>/3
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w"> </span>✔<span class="w"> </span>Container<span class="w"> </span>makefile-db-1<span class="w">   </span>Removed<span class="w">                                                                                                                                                                                                                                                                  </span><span class="m">0</span>.2s
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w"> </span>✔<span class="w"> </span>Container<span class="w"> </span>makefile-api-1<span class="w">  </span>Removed<span class="w">                                                                                                                                                                                                                                                                  </span><span class="m">0</span>.2s
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w"> </span>✔<span class="w"> </span>Network<span class="w"> </span>makefile_default<span class="w">  </span>Removed<span class="w">                                                                                                                                                                                                                                                                  </span><span class="m">0</span>.2s
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w"> </span><span class="sb">```</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w"> </span>If<span class="w"> </span>I<span class="w"> </span>had<span class="w"> </span>answered<span class="w"> </span><span class="s2">&quot;N&quot;</span><span class="w"> </span><span class="o">(</span>or<span class="w"> </span>anything<span class="w"> </span><span class="k">else</span><span class="o">)</span>,<span class="w"> </span>the<span class="w"> </span><span class="nb">command</span><span class="w"> </span>would<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>aborted.
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="c1">## The deep magic of the `help` target</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>Something<span class="w"> </span>I<span class="w"> </span>can<span class="s1">&#39;t live without anymore is a `help` target that prints out the available targets.</span>
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="s1">There are lots of recipes out there for this kind of a target, and lots of them provide absolutely</span>
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="s1">impenetrable one-liners that you just have to use with a bit of faith.</span>
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="s1">Well, after using a few of these recipes over the years, I finally decided to break down and make</span>
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="s1">one of my own that isn&#39;</span>t<span class="w"> </span>just<span class="w"> </span>an<span class="w"> </span>unreadable<span class="w"> </span>mess<span class="w"> </span>that<span class="w"> </span>flies<span class="w"> </span>off<span class="w"> </span>the<span class="w"> </span>right<span class="w"> </span>side<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>editor
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>screen.
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>
+</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>While<span class="w"> </span>this<span class="w"> </span>recipe<span class="w"> </span>_is_<span class="w"> </span>an<span class="w"> </span>awk<span class="w"> </span>program,<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>bit<span class="w"> </span>more<span class="w"> </span>readable<span class="w"> </span>than<span class="w"> </span>some<span class="w"> </span>others<span class="w"> </span>I<span class="s1">&#39;ve seen. I</span>
+</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="s1">elected to use `awk` because, like `make`, it&#39;</span>s<span class="w"> </span>pretty<span class="w"> </span>ubiquitous.<span class="w"> </span>Additionally,<span class="w"> </span>the<span class="w"> </span>program<span class="w"> </span>is
+</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>pretty<span class="w"> </span>terse<span class="w"> </span>and<span class="w"> </span>doesn<span class="err">&#39;</span>t<span class="w"> </span>inflate<span class="w"> </span>my<span class="w"> </span>Makefiles<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>crazy<span class="w"> </span>degree.
+</span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>
+</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>Here<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>code<span class="w"> </span>that<span class="w"> </span>makes<span class="w"> </span>it<span class="w"> </span>work:
+</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>
+</span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="sb">```</span>Makefile
+</span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>RED<span class="w">    </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>31m
+</span><span id="__span-14-31"><a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>GREEN<span class="w">  </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>32m
+</span><span id="__span-14-32"><a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>YELLOW<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>33m
+</span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>BLUE<span class="w">   </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>34m
+</span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>TEAL<span class="w">   </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>36m
+</span><span id="__span-14-35"><a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>CLEAR<span class="w">  </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>0m
+</span><span id="__span-14-36"><a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>
+</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>
+</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>define<span class="w"> </span>PRINT_HELP_PREAMBLE
+</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>BEGIN<span class="w"> </span><span class="o">{</span>
+</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="w">    </span>print<span class="w"> </span><span class="s2">&quot;Usage: </span><span class="k">$(</span>YELLOW<span class="k">)</span><span class="s2">make &lt;target&gt;</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="w">    </span>print
+</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="w">    </span>print<span class="w"> </span><span class="s2">&quot;Targets:&quot;</span>
+</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="o">}</span>
+</span><span id="__span-14-44"><a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a>/^##<span class="w"> </span><span class="o">=</span>+<span class="w"> </span><span class="o">[</span>^<span class="o">=]</span>+<span class="w"> </span><span class="o">=</span>+.*/<span class="w"> </span><span class="o">{</span>
+</span><span id="__span-14-45"><a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
+</span><span id="__span-14-46"><a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="w">    </span>sub<span class="o">(</span>/^##<span class="w"> </span><span class="o">=</span>+<span class="w"> </span>/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
+</span><span id="__span-14-47"><a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="w">    </span>sub<span class="o">(</span>/<span class="w"> </span><span class="o">=</span>+/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
+</span><span id="__span-14-48"><a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="w">    </span>printf<span class="o">(</span><span class="s2">&quot;\n  %s:\n&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
+</span><span id="__span-14-49"><a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="o">}</span>
+</span><span id="__span-14-50"><a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a>/^<span class="o">[</span><span class="nv">$$</span><span class="o">()</span>%<span class="w"> </span><span class="m">0</span>-9a-zA-Z_<span class="se">\/</span>-<span class="o">]</span>+<span class="o">(</span><span class="se">\\</span>:<span class="o">[</span><span class="nv">$$</span><span class="o">()</span>%<span class="w"> </span><span class="m">0</span>-9a-zA-Z_<span class="se">\/</span>-<span class="o">]</span>+<span class="o">)</span>*:.*?##/<span class="w"> </span><span class="o">{</span>
+</span><span id="__span-14-51"><a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="w">    </span><span class="nv">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
+</span><span id="__span-14-52"><a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="w">    </span>sub<span class="o">(</span>/:.*/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>t<span class="o">)</span>
+</span><span id="__span-14-53"><a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a><span class="w">    </span><span class="nv">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
+</span><span id="__span-14-54"><a id="__codelineno-14-54" name="__codelineno-14-54" href="#__codelineno-14-54"></a><span class="w">    </span>sub<span class="o">(</span>/.?*##/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>h<span class="o">)</span>
+</span><span id="__span-14-55"><a id="__codelineno-14-55" name="__codelineno-14-55" href="#__codelineno-14-55"></a><span class="w">    </span>printf<span class="o">(</span><span class="s2">&quot;    </span><span class="k">$(</span>YELLOW<span class="k">)</span><span class="s2">%-19s</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2"> </span><span class="k">$(</span>TEAL<span class="k">)</span><span class="s2">%s</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2">\n&quot;</span>,<span class="w"> </span>t,<span class="w"> </span>h<span class="o">)</span>
+</span><span id="__span-14-56"><a id="__codelineno-14-56" name="__codelineno-14-56" href="#__codelineno-14-56"></a><span class="o">}</span>
+</span><span id="__span-14-57"><a id="__codelineno-14-57" name="__codelineno-14-57" href="#__codelineno-14-57"></a>endef
+</span><span id="__span-14-58"><a id="__codelineno-14-58" name="__codelineno-14-58" href="#__codelineno-14-58"></a><span class="nb">export</span><span class="w"> </span>PRINT_HELP_PREAMBLE
+</span><span id="__span-14-59"><a id="__codelineno-14-59" name="__codelineno-14-59" href="#__codelineno-14-59"></a>
+</span><span id="__span-14-60"><a id="__codelineno-14-60" name="__codelineno-14-60" href="#__codelineno-14-60"></a>help:<span class="w">  </span><span class="c1">## Show help message</span>
+</span><span id="__span-14-61"><a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a><span class="w">    </span>@awk<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$$</span><span class="s2">PRINT_HELP_PREAMBLE&quot;</span><span class="w"> </span><span class="k">$(</span>MAKEFILE_LIST<span class="k">)</span>
+</span></code></pre></div>
+<p>The first few lines just define some colors that will be used in rendering the help text. It's
+just a bit of sugar that makes looking at the generated output a little nicer.</p>
+<p>Next, I use <code>define</code> to specify the <code>awk</code> program. I do this because it works kind of like a
+HEREDOC and lets me write out the code without having to escape all the newlines with ugly "\"
+characters.</p>
+<p>The program itself finds lines that look like <code>## ==== Section ====</code> and uses the text as
+section headers for the targets. Then, it finds targets that include a <code>## comment</code> and prints
+them out including the comment text. If a target doesn't have a <code>## comment</code>, it will not appear
+in the help output.</p>
+<p>Finally, I export the defined block as an environment variable that can be referenced in the
+help target. Finally, the <code>help</code> target itself runs the program in <code>awk</code> against all of the
+<code>Makefile</code> targets passed to the <code>make</code> command.</p>
+<p>If you want to dive deeper into what's going in the <code>awk</code> program itself....well, you can have a
+nice adventure learning about the
+<a href="https://www.gnu.org/software/gawk/manual/gawk.html">awk programming language</a>!</p>
+<h2 id="other-stuff">Other stuff</h2>
+<p>Here are some other things I like to have in my <code>Makefile</code>:</p>
+<h3 id="phony-specifiers"><code>.PHONY</code> specifiers</h3>
+<p>I use <code>.PHONY</code> specifiers to tell <code>make</code> that my targets won't actually generate files
+that match them:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">default</span> <span class="n">build</span> <span class="n">migrate</span> <span class="n">clean</span> <span class="n">help</span>
+</span></code></pre></div>
+<h3 id="shell-vars">SHELL vars</h3>
+<p>I like to use these two variable settings to tell <code>make</code> to use <code>bash</code> for its shell and to
+use the same shell for each command in a given target:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">SHELL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>/bin/bash
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nf">.ONESHELL</span><span class="o">:</span>
+</span></code></pre></div>
+<h3 id="default-target">Default target</h3>
+<p>You can use a special variable called <code>.DEFAULT_GOAL</code> to describe which target (usually <code>help</code>)
+should be run if no explicit target is given. However, I think it's a lot more readable to
+just create a <code>default</code> target in the <code>Makefile</code>:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nf">default</span><span class="o">:</span><span class="w"> </span><span class="n">help</span>
+</span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>That pretty much covers what I do in my <code>Makefiles</code> these days. I'm sure in a few months, I'll
+have to come back and update this with a few more patterns or improvements that I've found.
+Still, I hope this is helpful and gives you some ideas about ways you can structure your own
+<code>Makefile</code> to make your project friendlier for others to work on or just for you to come back
+to after a few months.</p>
+<p>Check out my <a href="https://github.com/dusktreader/Makefile">Makefile</a> repository to see some complete
+examples.</p>
+<p>Thanks for reading!</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+  <h2 id="__comments">Comments</h2>
+
+  <script src="https://giscus.app/client.js"
+          data-repo="dusktreader/blog"
+          data-repo-id="R_kgDOOQ5SlA"
+          data-category="General"
+          data-category-id="DIC_kwDOOQ5SlM4Coli_"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../../05/13/introducing-typerdrive-develop-api-connected-typer-apps-at-lightspeed/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introducing Typerdrive: Develop API-Connected Typer Apps at Lightspeed">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Introducing Typerdrive: Develop API-Connected Typer Apps at Lightspeed
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.expand", "navigation.footer", "navigation.tracking", "navigation.footer", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
