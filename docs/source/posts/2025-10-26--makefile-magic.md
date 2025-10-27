@@ -14,13 +14,18 @@ categories:
 !!! tip "TLDR"
     I have a cool structure, nice convenience functions, and flashy magic that "makes" my projects pretty awesome!
 
-For a fairlylong time, now, I've been including a `Makefile` in all of my projects. It's a nice way to provide
+For a fairly long time, now, I've been including a `Makefile` in all of my projects. It's a nice way to provide
 access to actions that need to be done over-and-over in a software project. It's familiar (to most folks), works
 on almost any reasonable dev environment out-of-the box, and makes getting started on the project really
 straightforward.
 
 Over the years, I've developed a lot of cool stuff that I like to include in my `Makefiles`. This ranges from some
 basic patterns and structures that I've found helpful to some fancy "magic" that makes it nice to work with.
+
+![make help example](../images/2025-10-26--make-help.png){ align=center }
+/// caption
+Example of `make help` with my custom `Makefile`
+///
 
 Today, I decided to create a [GitHub repo](https://github.com/dusktreader/Makefile) to showcase these patterns in
 a few example `Makefile` entries. I thought it might be nice to talk through what's offered there and explain some
@@ -53,7 +58,7 @@ So, forget all that. Use `make` and just get to work!
 ## It's been a long road
 
 My first exposure to `Makefile` was a couple of decades ago in my `Software Engineering Tools` class that was a
-required course for my University's (Go [Cougs](https://wsu.edu)!) Computer Science program at the time. The
+required course for my university's (Go [Cougs](https://wsu.edu)!) Computer Science program at the time. The
 curriculum was entirely Linux-based, and we were taught how to use a lot of tools involved in working in a Linux
 development environment circa 2005. One of these was obviously `make`.
 
