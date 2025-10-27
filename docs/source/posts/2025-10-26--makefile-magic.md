@@ -297,7 +297,7 @@ docker compose down --remove-orphans
  ✔ Container makefile-db-1   Removed                                                                                                                                                                                                                                                                  0.2s
  ✔ Container makefile-api-1  Removed                                                                                                                                                                                                                                                                  0.2s
  ✔ Network makefile_default  Removed                                                                                                                                                                                                                                                                  0.2s
- ```
+```
 
  If I had answered "N" (or anything else), the command would have been aborted.
 
