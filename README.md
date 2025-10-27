@@ -2,7 +2,7 @@
 
 Tech learnings and musings from the.dusktreader
 
-Visit [blog.dusktreader.dev](https://blog.dusktreader.dev)
+Visit [blog.dusktreader.dev](https://blog.dusktreader.dev).
 
 ## Licenses
 
