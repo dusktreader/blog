@@ -570,6 +570,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-deep-magic-of-the-help-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      The deep magic of the help target
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#other-stuff" class="md-nav__link">
     <span class="md-ellipsis">
       Other stuff
@@ -930,60 +939,51 @@ want to trigger by accident. For these, it's nice to include a confirmation that
 </span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w"> </span>✔<span class="w"> </span>Container<span class="w"> </span>makefile-db-1<span class="w">   </span>Removed<span class="w">                                                                                                                                                                                                                                                                  </span><span class="m">0</span>.2s
 </span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w"> </span>✔<span class="w"> </span>Container<span class="w"> </span>makefile-api-1<span class="w">  </span>Removed<span class="w">                                                                                                                                                                                                                                                                  </span><span class="m">0</span>.2s
 </span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w"> </span>✔<span class="w"> </span>Network<span class="w"> </span>makefile_default<span class="w">  </span>Removed<span class="w">                                                                                                                                                                                                                                                                  </span><span class="m">0</span>.2s
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w"> </span><span class="sb">```</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w"> </span>If<span class="w"> </span>I<span class="w"> </span>had<span class="w"> </span>answered<span class="w"> </span><span class="s2">&quot;N&quot;</span><span class="w"> </span><span class="o">(</span>or<span class="w"> </span>anything<span class="w"> </span><span class="k">else</span><span class="o">)</span>,<span class="w"> </span>the<span class="w"> </span><span class="nb">command</span><span class="w"> </span>would<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>aborted.
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
-</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="c1">## The deep magic of the `help` target</span>
-</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>
-</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>Something<span class="w"> </span>I<span class="w"> </span>can<span class="s1">&#39;t live without anymore is a `help` target that prints out the available targets.</span>
-</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="s1">There are lots of recipes out there for this kind of a target, and lots of them provide absolutely</span>
-</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="s1">impenetrable one-liners that you just have to use with a bit of faith.</span>
-</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>
-</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="s1">Well, after using a few of these recipes over the years, I finally decided to break down and make</span>
-</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="s1">one of my own that isn&#39;</span>t<span class="w"> </span>just<span class="w"> </span>an<span class="w"> </span>unreadable<span class="w"> </span>mess<span class="w"> </span>that<span class="w"> </span>flies<span class="w"> </span>off<span class="w"> </span>the<span class="w"> </span>right<span class="w"> </span>side<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>editor
-</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>screen.
-</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>
-</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>While<span class="w"> </span>this<span class="w"> </span>recipe<span class="w"> </span>_is_<span class="w"> </span>an<span class="w"> </span>awk<span class="w"> </span>program,<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>bit<span class="w"> </span>more<span class="w"> </span>readable<span class="w"> </span>than<span class="w"> </span>some<span class="w"> </span>others<span class="w"> </span>I<span class="s1">&#39;ve seen. I</span>
-</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="s1">elected to use `awk` because, like `make`, it&#39;</span>s<span class="w"> </span>pretty<span class="w"> </span>ubiquitous.<span class="w"> </span>Additionally,<span class="w"> </span>the<span class="w"> </span>program<span class="w"> </span>is
-</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>pretty<span class="w"> </span>terse<span class="w"> </span>and<span class="w"> </span>doesn<span class="err">&#39;</span>t<span class="w"> </span>inflate<span class="w"> </span>my<span class="w"> </span>Makefiles<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>crazy<span class="w"> </span>degree.
-</span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>
-</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>Here<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>code<span class="w"> </span>that<span class="w"> </span>makes<span class="w"> </span>it<span class="w"> </span>work:
-</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>
-</span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="sb">```</span>Makefile
-</span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>RED<span class="w">    </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>31m
-</span><span id="__span-14-31"><a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>GREEN<span class="w">  </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>32m
-</span><span id="__span-14-32"><a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>YELLOW<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>33m
-</span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>BLUE<span class="w">   </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>34m
-</span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>TEAL<span class="w">   </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>36m
-</span><span id="__span-14-35"><a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>CLEAR<span class="w">  </span>:<span class="o">=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>0m
-</span><span id="__span-14-36"><a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>
-</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>
-</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>define<span class="w"> </span>PRINT_HELP_PREAMBLE
-</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>BEGIN<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="w">    </span>print<span class="w"> </span><span class="s2">&quot;Usage: </span><span class="k">$(</span>YELLOW<span class="k">)</span><span class="s2">make &lt;target&gt;</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2">&quot;</span>
-</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="w">    </span>print
-</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="w">    </span>print<span class="w"> </span><span class="s2">&quot;Targets:&quot;</span>
-</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="o">}</span>
-</span><span id="__span-14-44"><a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a>/^##<span class="w"> </span><span class="o">=</span>+<span class="w"> </span><span class="o">[</span>^<span class="o">=]</span>+<span class="w"> </span><span class="o">=</span>+.*/<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-14-45"><a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
-</span><span id="__span-14-46"><a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="w">    </span>sub<span class="o">(</span>/^##<span class="w"> </span><span class="o">=</span>+<span class="w"> </span>/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
-</span><span id="__span-14-47"><a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="w">    </span>sub<span class="o">(</span>/<span class="w"> </span><span class="o">=</span>+/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
-</span><span id="__span-14-48"><a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="w">    </span>printf<span class="o">(</span><span class="s2">&quot;\n  %s:\n&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
-</span><span id="__span-14-49"><a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="o">}</span>
-</span><span id="__span-14-50"><a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a>/^<span class="o">[</span><span class="nv">$$</span><span class="o">()</span>%<span class="w"> </span><span class="m">0</span>-9a-zA-Z_<span class="se">\/</span>-<span class="o">]</span>+<span class="o">(</span><span class="se">\\</span>:<span class="o">[</span><span class="nv">$$</span><span class="o">()</span>%<span class="w"> </span><span class="m">0</span>-9a-zA-Z_<span class="se">\/</span>-<span class="o">]</span>+<span class="o">)</span>*:.*?##/<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-14-51"><a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="w">    </span><span class="nv">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
-</span><span id="__span-14-52"><a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="w">    </span>sub<span class="o">(</span>/:.*/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>t<span class="o">)</span>
-</span><span id="__span-14-53"><a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a><span class="w">    </span><span class="nv">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
-</span><span id="__span-14-54"><a id="__codelineno-14-54" name="__codelineno-14-54" href="#__codelineno-14-54"></a><span class="w">    </span>sub<span class="o">(</span>/.?*##/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>h<span class="o">)</span>
-</span><span id="__span-14-55"><a id="__codelineno-14-55" name="__codelineno-14-55" href="#__codelineno-14-55"></a><span class="w">    </span>printf<span class="o">(</span><span class="s2">&quot;    </span><span class="k">$(</span>YELLOW<span class="k">)</span><span class="s2">%-19s</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2"> </span><span class="k">$(</span>TEAL<span class="k">)</span><span class="s2">%s</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2">\n&quot;</span>,<span class="w"> </span>t,<span class="w"> </span>h<span class="o">)</span>
-</span><span id="__span-14-56"><a id="__codelineno-14-56" name="__codelineno-14-56" href="#__codelineno-14-56"></a><span class="o">}</span>
-</span><span id="__span-14-57"><a id="__codelineno-14-57" name="__codelineno-14-57" href="#__codelineno-14-57"></a>endef
-</span><span id="__span-14-58"><a id="__codelineno-14-58" name="__codelineno-14-58" href="#__codelineno-14-58"></a><span class="nb">export</span><span class="w"> </span>PRINT_HELP_PREAMBLE
-</span><span id="__span-14-59"><a id="__codelineno-14-59" name="__codelineno-14-59" href="#__codelineno-14-59"></a>
-</span><span id="__span-14-60"><a id="__codelineno-14-60" name="__codelineno-14-60" href="#__codelineno-14-60"></a>help:<span class="w">  </span><span class="c1">## Show help message</span>
-</span><span id="__span-14-61"><a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a><span class="w">    </span>@awk<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$$</span><span class="s2">PRINT_HELP_PREAMBLE&quot;</span><span class="w"> </span><span class="k">$(</span>MAKEFILE_LIST<span class="k">)</span>
+</span></code></pre></div>
+<p>If I had answered "N" (or anything else), the command would have been aborted.</p>
+<h2 id="the-deep-magic-of-the-help-target">The deep magic of the <code>help</code> target</h2>
+<p>Something I can't live without anymore is a <code>help</code> target that prints out the available targets.
+There are lots of recipes out there for this kind of a target, and lots of them provide absolutely
+impenetrable one-liners that you just have to use with a bit of faith.</p>
+<p>Well, after using a few of these recipes over the years, I finally decided to break down and make
+one of my own that isn't just an unreadable mess that flies off the right side of the editor
+screen.</p>
+<p>While this recipe <em>is</em> an awk program, it is a bit more readable than some others I've seen. I
+elected to use <code>awk</code> because, like <code>make</code>, it's pretty ubiquitous. Additionally, the program is
+pretty terse and doesn't inflate my Makefiles to a crazy degree.</p>
+<p>Here is the code that makes it work:</p>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">RED</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>31m
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nv">GREEN</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>32m
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nv">YELLOW</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>33m
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nv">BLUE</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>34m
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nv">TEAL</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>36m
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="nv">CLEAR</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="se">\0</span><span class="m">33</span><span class="o">[</span>0m
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="cp">define PRINT_HELP_PREAMBLE</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="err">BEGIN</span><span class="w"> </span><span class="err">{</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="nf">print &quot;Usage</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">YELLOW</span><span class="k">)</span><span class="n">make</span> &lt;<span class="n">target</span>&gt;<span class="k">$(</span><span class="nv">CLEAR</span><span class="k">)</span>&quot;
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span>print
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span>print<span class="w"> </span><span class="s2">&quot;Targets:&quot;</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="err">}</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="err">/^</span><span class="c">## =+ [^=]+ =+.*/ {</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">    </span>sub<span class="o">(</span>/^##<span class="w"> </span><span class="o">=</span>+<span class="w"> </span>/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">    </span>sub<span class="o">(</span>/<span class="w"> </span><span class="o">=</span>+/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">    </span>printf<span class="o">(</span><span class="s2">&quot;\n  %s:\n&quot;</span>,<span class="w"> </span>s<span class="o">)</span>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="err">}</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="nf">/^[$$()% 0-9a-zA-Z_\/-]+(\\</span><span class="o">:</span>[$<span class="k">$()</span>% 0-9<span class="n">a</span>-<span class="n">zA</span>-<span class="n">Z_</span>\/-]+)*:.*?<span class="c">##/ {</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">    </span><span class="nv">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">    </span>sub<span class="o">(</span>/:.*/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>t<span class="o">)</span>
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="nv">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$$</span><span class="m">0</span>
+</span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">    </span>sub<span class="o">(</span>/.?*##/,<span class="w"> </span><span class="s2">&quot;&quot;</span>,<span class="w"> </span>h<span class="o">)</span>
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="w">    </span>printf<span class="o">(</span><span class="s2">&quot;    </span><span class="k">$(</span>YELLOW<span class="k">)</span><span class="s2">%-19s</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2"> </span><span class="k">$(</span>TEAL<span class="k">)</span><span class="s2">%s</span><span class="k">$(</span>CLEAR<span class="k">)</span><span class="s2">\n&quot;</span>,<span class="w"> </span>t,<span class="w"> </span>h<span class="o">)</span>
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="err">}</span>
+</span><span id="__span-15-28"><a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="cp">endef</span>
+</span><span id="__span-15-29"><a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="k">export</span><span class="w"> </span><span class="nv">PRINT_HELP_PREAMBLE</span>
+</span><span id="__span-15-30"><a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>
+</span><span id="__span-15-31"><a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a><span class="nf">help</span><span class="o">:</span><span class="w">  </span><span class="c">## Show help message</span>
+</span><span id="__span-15-32"><a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a><span class="w">    </span>@awk<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$$</span><span class="s2">PRINT_HELP_PREAMBLE&quot;</span><span class="w"> </span><span class="k">$(</span>MAKEFILE_LIST<span class="k">)</span>
 </span></code></pre></div>
 <p>The first few lines just define some colors that will be used in rendering the help text. It's
 just a bit of sugar that makes looking at the generated output a little nicer.</p>
@@ -1005,19 +1005,19 @@ nice adventure learning about the
 <h3 id="phony-specifiers"><code>.PHONY</code> specifiers</h3>
 <p>I use <code>.PHONY</code> specifiers to tell <code>make</code> that my targets won't actually generate files
 that match them:</p>
-<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">default</span> <span class="n">build</span> <span class="n">migrate</span> <span class="n">clean</span> <span class="n">help</span>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">default</span> <span class="n">build</span> <span class="n">migrate</span> <span class="n">clean</span> <span class="n">help</span>
 </span></code></pre></div>
 <h3 id="shell-vars">SHELL vars</h3>
 <p>I like to use these two variable settings to tell <code>make</code> to use <code>bash</code> for its shell and to
 use the same shell for each command in a given target:</p>
-<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">SHELL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>/bin/bash
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nf">.ONESHELL</span><span class="o">:</span>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nv">SHELL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>/bin/bash
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nf">.ONESHELL</span><span class="o">:</span>
 </span></code></pre></div>
 <h3 id="default-target">Default target</h3>
 <p>You can use a special variable called <code>.DEFAULT_GOAL</code> to describe which target (usually <code>help</code>)
 should be run if no explicit target is given. However, I think it's a lot more readable to
 just create a <code>default</code> target in the <code>Makefile</code>:</p>
-<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nf">default</span><span class="o">:</span><span class="w"> </span><span class="n">help</span>
+<div class="language-Makefile highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nf">default</span><span class="o">:</span><span class="w"> </span><span class="n">help</span>
 </span></code></pre></div>
 <h2 id="conclusion">Conclusion</h2>
 <p>That pretty much covers what I do in my <code>Makefiles</code> these days. I'm sure in a few months, I'll
