@@ -3,7 +3,7 @@ default: help
 
 ## ==== Documentation ==================================================================================================
 
-docs: docs/serve  ## Shortcut for docs/serve
+docs: docs/build  ## Shortcut for docs/serve
 
 docs/build:  ## Build the documentation
 	@uv run mkdocs build --config-file=docs/mkdocs.yaml
