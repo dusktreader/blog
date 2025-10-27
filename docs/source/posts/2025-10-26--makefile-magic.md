@@ -21,7 +21,7 @@ any reasonable dev environment out-of-the box, and makes getting started on the 
 Over the years, I've developed a lot of cool stuff that I like to include in my `Makefiles`. This ranges from some
 basic patterns and structures that I've found helpful to some fancy "magic" that makes it nice to work with.
 
-Today, I decided to create a [Github repo](https://github.com/dusktreader/Makefile) to showcase these patterns in
+Today, I decided to create a [GitHub repo](https://github.com/dusktreader/Makefile) to showcase these patterns in
 a few example `Makefile` entries. I thought it might be nice to talk through what's offered there and explain some
 of the deeper magic.
 
@@ -32,7 +32,7 @@ of the deeper magic.
 ## Why `make`?
 
 I will be the _first_ to admit that the syntax and structure of `Makefiles` is _awful_. It feels very dated, it's
-not obvious at all to newcomers, and it's scope doesn't really match most modern projects that aren't building
+not obvious at all to newcomers, and its scope doesn't really match most modern projects that aren't building
 C and C++ apps.
 
 Well, the first reason is that `make` is ubiquitous. I work almost exclusively in Unix-like environments, and it's
@@ -53,7 +53,7 @@ So, forget all that. Use `make` and just get to work!
 
 My first exposure to `Makefile` was a couple of decades ago in my `Software Engineering Tools` class that was a
 required course for my University's (Go [Cougs](https://wsu.edu)!) Computer Science program at the time. The
-curriculum was entirely Linux based, and we were taught how to use a lot of tools involved in working in a Linux
+curriculum was entirely Linux-based, and we were taught how to use a lot of tools involved in working in a Linux
 development environment circa 2005. One of these was obviously `make`.
 
 At the time, the program's foundation was C++ development. I was broke as hell, so getting a Visual Studio license
@@ -83,16 +83,16 @@ simple: ## Just a simple target that's very straightforward
 	@echo Executing simple target
 ```
 
-As you'll see later, the _format_ of the section headers is actually significant. As are the comments for each of the
+As you'll see later, the _format_ of the section headers is actually significant as are the comments for each of the
 targets. These are used to generate a nicely formatted `help` output for my `Makefile`. But, as you can see here, they
-are still very human readable and helpful when you are navigating the Makefile
+are still very human-readable and helpful when you are navigating the Makefile
 
 
 ## Targets with prerequisites
 
-A fundamental element of `Makefile` syntax is specifying `prerequisites` for a given target. These tell `make ` to only
+A fundamental element of `Makefile` syntax is specifying `prerequisites` for a given target. These tell `make` to only
 run the target if the file or target described by the prereq exists. While this is `extremely` useful in specifying
-build chains in `C++` and `C` projects, for other projects it can be a nice way to simply say, _also_ run this other
+build chains in C++ and C projects, for other projects it can be a nice way to simply say, _also_ run this other
 target whenever I run this one.
 
 For example, we could provide a simple prereq for a target like this:
@@ -132,8 +132,8 @@ You can read more about prerequisites in the
 
 ## Targets with patterns
 
-Now, for `C++` and `C` development, patterns are essential. This lets you specify that each `.c` file needs to have a
-`.o` file generated for it. In a `C` `Makefile`, you might have a target like:
+Now, for C++ and C development, patterns are essential. This lets you specify that each `.c` file needs to have a
+`.o` file generated for it. In a C `Makefile`, you might have a target like:
 
 ```Makefile
 %.o: %.c
@@ -168,11 +168,11 @@ You can read more about patterns in the
 [official `make` documentation](https://www.gnu.org/software/make/manual/html_node/Pattern-Rules.html).
 
 
-## Targets that use arg vars
+## Targets that use variables
 
 Often, I need a target to be provided optional values that change the behavior. In such a case, patterns won't
 actually fit the bill. This is especially true if there are more than one optional variables that might need
-to be passed in. For these sorts of targets, we can use var args.
+to be passed in. For these sorts of targets, we can use variables.
 
 Consider a target that can have a `--log-level` flag provided to the shell command. By default, I want to use
 a sensible log level, but in some cases I may want something more verbose. I could use this pattern to accomplish
@@ -186,7 +186,7 @@ ingest:
 ```
 
 Here, if I do not provide a `LOG_LEVEL` value in my `make` command, the `ingest` process will default to the
-"WARN" level. Hoever, if I want to be more verbose, I can supply the value for the var arg like this:
+"WARN" level. However, if I want to be more verbose, I can supply the value for the variables like this:
 
 ```bash
 make ingest LOG_LEVEL=DEBUG
@@ -245,12 +245,12 @@ migrate/%: _guard_env/%  ## Apply migrations in the database
 ```
 
 With this guard, I can be sure that the target can only be run against the allowed environments. This
-could prevent me from accidently applying a migration in production!
+could prevent me from accidentally applying a migration in production!
 
 
 ### Valid variable guard
 
-This guard is almost identical to the "Valid pattern guard". However, it checks a supplied arg var
+This guard is almost identical to the "Valid pattern guard". However, it checks a supplied variable
 to make sure that it is valid:
 
 ```Makefile
@@ -275,7 +275,7 @@ migrate: _guard_env  ## Apply migrations in the database
 
 A lot of times, my `Makefile` will contain some targets that can do irreversible things that I don't
 want to trigger by accident. For these, it's nice to include a confirmation that ensures that I
-_really_ mean to run that target. A conrirmation can be defined like this:
+_really_ mean to run that target. A confirmation can be defined like this:
 
 ```Makefile
 
@@ -368,9 +368,9 @@ Finally, I export the defined block as an environment variable that can be refer
 help target. Finally, the `help` target itself runs the program in `awk` against all of the
 `Makefile` targets passed to the `make` command.
 
-If you want to deeper into what's going in the `awk` program itself....well, you can have a
+If you want to dive deeper into what's going in the `awk` program itself....well, you can have a
 nice adventure learning about the
-[awk prgramming language](https://www.gnu.org/software/gawk/manual/gawk.html)!
+[awk programming language](https://www.gnu.org/software/gawk/manual/gawk.html)!
 
 
 ## Other stuff
@@ -384,7 +384,7 @@ I use `.PHONY` specifiers to tell `make` that my targets won't actually generate
 that match them:
 
 ```Makefile
-.PHONY default build migrate clean help
+.PHONY: default build migrate clean help
 ```
 
 
@@ -395,13 +395,13 @@ use the same shell for each command in a given target:
 
 ```Makefile
 SHELL := /bin/bash
-.ONESHELL
+.ONESHELL:
 ```
 
 
 ### Default target
 
-You can use a special variable alled `.DEFAULT_GOAL` to describe which target (usually `help`)
+You can use a special variable called `.DEFAULT_GOAL` to describe which target (usually `help`)
 should be run if no explicit target is given. However, I think it's a lot more readable to
 just create a `default` target in the `Makefile`:
 
