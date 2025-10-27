@@ -69,7 +69,7 @@ Enough about ancient history, lets dig into the `Makefile` examples and see my c
 ## Sections and basic targets
 
 One of the first things I've found essential over the years is organizing the `Makefile` by sections.
-Without it, the file becomse an impenetrable mess of targets without any rhyme or reason to the ordering.
+Without it, the file becomes an impenetrable mess of targets without any rhyme or reason to the ordering.
 
 So, I like to break it up into sections. I designate sections of my `Makefile` like this:
 
