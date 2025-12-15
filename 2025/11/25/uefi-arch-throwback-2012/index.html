@@ -8,11 +8,11 @@
       
       
       
-        <link rel="canonical" href="http://blog.dusktreader.dev/2025/03/29/self-contained-python-scripts-with-uv/">
+        <link rel="canonical" href="http://blog.dusktreader.dev/2025/11/25/uefi-arch-throwback-2012/">
       
       
+        <link rel="prev" href="../../../10/26/makefile-magic/">
       
-        <link rel="next" href="../../../04/06/bootstrapping-python-projects-with-copier/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../../../feed_rss_created.xml">
@@ -23,7 +23,7 @@
     
     
       
-        <title>Self-contained Python scripts with uv - the.dusktreader blog</title>
+        <title>UEFI Arch (Throwback 2012) - the.dusktreader blog</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#self-contained-python-scripts-with-uv" class="md-skip">
+        <a href="#uefi-arch-throwback-2012" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Self-contained Python scripts with uv
+              UEFI Arch (Throwback 2012)
             
           </span>
         </div>
@@ -458,6 +458,65 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-uefi-bootable-archiso-usb-installer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up a UEFI bootable Archiso USB Installer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-the-system-to-install-arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing the system to install Arch
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparing the system to install Arch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#partitioning-the-hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Partitioning the HDD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -512,7 +571,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2025-03-29 00:00:00+00:00" class="md-ellipsis">March 29, 2025</time>
+                        <time datetime="2025-11-25 00:00:00+00:00" class="md-ellipsis">November 25, 2025</time>
                       </div>
                     </li>
                     
@@ -561,13 +620,7 @@
       
       
       
-        <span class="md-tag">Python</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">uv</span>
+        <span class="md-tag">Linux</span>
       
     
   </nav>
@@ -577,108 +630,140 @@
   
 
 
-<h1 id="self-contained-python-scripts-with-uv">Self-contained Python scripts with <code>uv</code></h1>
+<h1 id="uefi-arch-throwback-2012">UEFI Arch (Throwback 2012)</h1>
 <div class="admonition tip">
-<p class="admonition-title">TLDR</p>
-<p>You can add uv into the shebang line for a Python script to make it a self-contained executable.</p>
+<p class="admonition-title">Throwback</p>
+<p>In 2012, I documented the process of setting up a laptop with UEFI. I read it every now and then,
+and I thought it might be interesting to others as well. Here is the unedited document copied from
+my google drive.</p>
 </div>
-<p>I am working on a Go project to better learn the language. It's a simple API backed by a postgres database.</p>
-<p>When I need to test out an endpoint, I prefer to use the <a href="https://www.python-httpx.org/">httpx</a> python package inside an
-<a href="https://ipython.org/">ipython</a> REPL over making curl requests. It's nice to be able to introspect responses and easily
-package payloads with dicts instead of writing out JSON.</p>
-<p>Anyway, I decided to write a script to upsert some user data so that I can beat on my <code>/users</code> endpoint.</p>
+<p><em>Installing ArchLinux on a Notebook with UEFI</em></p>
 <!-- more -->
 
-<p>My <code>jam_users.py</code> script looks like this:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">IPython</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">users</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;The Dude&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;the.dude@abides.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;thedudeabides&quot;</span><span class="p">),</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Walter Sobchak&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;walter@sobchak-security.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;vietnamvet&quot;</span><span class="p">),</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Donnie&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;donniesurfs@yahoo.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;iamthewalrus&quot;</span><span class="p">),</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Maude&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;mauddie@avant-guard.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;goodmanandthorough&quot;</span><span class="p">),</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">]</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">r</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:4000/v1/users&quot;</span><span class="p">)</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;users&quot;</span><span class="p">]:</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting: </span><span class="si">{</span><span class="n">user</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;http://localhost:4000/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;http://localhost:4000/v1/users&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">IPython</span><span class="o">.</span><span class="n">embed</span><span class="p">()</span>
-</span></code></pre></div>
-<p>This is really straight-forward. It will clear out any existing users and then insert these test users. Right after
-that, I get dropped into an <code>ipython</code> repl to do what I need for testing. All I have to do is run:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>jam_users.py
-</span></code></pre></div>
-<p>However, if I want to run the script as-is, I will need to choose one of these approaches:</p>
+<h2 id="introduction">Introduction</h2>
+<p>In the early part of the summer of 2012, I purchased a new notebook computer. It was my first experience with
+purchasing a notebook, but I had wanted one for a while and decided it was time. Sadly, I started the whole
+experience in the worst way by choosing to purchase the most economical (read: cheap) notebook I could stomach.
+I landed on an Acer Aspire. My choice computer included one of the relatively new AMD APU processors that combines
+a GPU and CPU on a single chip. I figured that I would use this new computer mostly for working on my thesis for my
+Master’s Degree in Computer Science<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. So, I could afford to forgo a great graphics card and most of the other
+frills that come with a better system.</p>
+<p>Being a diehard linux user, the first thing I did upon getting the new computer onto my desk at home was to slide a
+Ubuntu 12.04 install disk into the system and blast all traces of Microsoft software into the oblivion such
+abominations deserve. This went over well for the most part, but during the install process I noticed something sort
+of fundamentally different. This was a UEFI system.</p>
+<p>I had heard about UEFI before and knew about the great skirmish happening over Microsoft’s secure boot designs. I had
+hoped to skirt such problems by sticking with BIOS based systems. Well, it was too late to back out now, and Ubuntu
+had seemed to handle the install without a problem. So, no worries.</p>
+<p>I got sick of Ubuntu and tired of Unity. It looks pretty. It works well. I like the features. But, it is a hog! I just
+couldn’t stomach the slower speeds of my system, and frame-rates on my preferred game, UrbanTerror, were periodically
+too low to handle.</p>
+<p>I decided in January of 2013 to do something I’d been meaning to do for a while. I was going to re-visit Arch Linux
+and start from the ground up.</p>
+<p>That’s where things got hairy. UEFI is not a trivial obstacle to handle with a linux distro that expects the user to
+manually overcome hardware configuration obstacles. This article describes the process that I used to finally get Arch
+successfully installed on my system. It is not gospel. I did some things that didn’t follow the strict recommendations
+of the Arch gurus on the ArchWiki or the Arch forums. But, what I ended up with worked, and that was what mattered to
+me most.</p>
+<p>This article also doesn’t document all the things that I tried and failures I had along the way. This is just a walk-
+through of things that worked. The journey was in reality, much more winding and treacherous. In this article, I get to
+pretend that the path was well worn and easy to follow.</p>
+<h2 id="resources">Resources</h2>
+<p><em>It’s dangerous to go alone. Take this!</em></p>
+<p>Installing Arch is an involved process that takes more than a little patience and self-reliance. However, there are
+ample resources out there that really helped me along. I’ve listed them here because, even though a simple google search
+can usually fetch them easily, sometimes it’s nice to have a quick reference.</p>
 <ul>
-<li>Install the dependencies <code>httpx</code>, <code>IPython</code>, and <code>loguru</code> globally in my system python</li>
-<li>Create a virtual environment, activate it, install deps, and run my script while the venv is activated</li>
+<li>ArchWiki:<ul>
+<li>Homepage: <a href="http://wiki.archlinux.org">http://wiki.archlinux.org</a></li>
+<li>UEFI Article: <a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface">https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface</a></li>
 </ul>
-<p>These are both not great options in my opinion. These approaches also rely on having a system python installed that is
-compatible with these packages. This isn't as big of a problem, but something to consider anyway.</p>
-<p>I've been using <a href="https://github.com/astral-sh/uv">uv</a> a lot lately, and I'm becoming quite enamoured with its usefulness
-as a package manager, efficiency as a pip replacement, and abilities for isolated python executables. One thing that I
-haven't used much yet are the special <code># /// script</code> tags in a python script.</p>
-<p>When I first read about this functionality, I was pretty skeptical. I'm not particularly keen on embedding syntax into
-comments. However, this seemed like the perfect application. So, updated my script to include the deps in the script
-header like so:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># /// script</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># dependencies = [&quot;ipython&quot;, &quot;httpx&quot;, &quot;loguru&quot;]</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># ///</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">IPython</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="o">...</span>
+</li>
+<li>ArchForums:<ul>
+<li>Homepage: <a href="bbs.archlinux.org">bbs.archlinux.org</a></li>
+</ul>
+</li>
+<li>rEFInd:<ul>
+<li>Homepage: <a href="http://www.rodsbooks.com/refind/">http://www.rodsbooks.com/refind/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="setting-up-a-uefi-bootable-archiso-usb-installer">Setting up a UEFI bootable Archiso USB Installer</h2>
+<p>loren ipsum<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<h2 id="preparing-the-system-to-install-arch">Preparing the system to install Arch</h2>
+<h3 id="partitioning-the-hdd">Partitioning the HDD</h3>
+<p>Time honored tradition of linux dictates that one should set up at least 4 partitions for a new install; one partition
+each for <code>boot</code>, <code>swap</code>, <code>root</code>, and <code>home</code>. This is the way I chose to set up my system. After deciding to follow
+ancient wisdom, I set about partitioning my HDD.</p>
+<p>First, I needed to check the layout of disks on my system. This was easy enough by using the fdisk command:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>fdisk<span class="w"> </span>-l
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&lt;add<span class="w"> </span>output&gt;
 </span></code></pre></div>
-<p>With this added, now I can run the script really easily with <code>uv</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>run<span class="w"> </span>jam_users.py
+<p>Looking at the output, I was able to identify my HDD by its relative size (about 500 GB). So, I noted where it appeared
+in the <code>/dev/</code> tree. In this case it was <code>/dev/sda</code></p>
+<p>Next, I set about actually setting up the partitions. Because I wanted to have a <code>GPT</code> (GUID Partition Table)
+partitioned disk, I needed to use the <code>gdisk</code> utility instead of the traditional <code>fdisk</code> utility that is usually used for
+setting up <code>MBR</code> disks.</p>
+<p>My goal was to set up 4 partitions like so:</p>
+<table>
+<thead>
+<tr>
+<th>Dev Tree Location</th>
+<th>FS Location</th>
+<th>Size</th>
+<th>FS Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/dev/sda1</td>
+<td>/boot</td>
+<td>1 GB</td>
+<td>FAT32</td>
+</tr>
+<tr>
+<td>/dev/sda2</td>
+<td>swap</td>
+<td>1 GB</td>
+<td>linux-swap</td>
+</tr>
+<tr>
+<td>/dev/sda3</td>
+<td>/</td>
+<td>20 GB</td>
+<td>ext4</td>
+</tr>
+<tr>
+<td>/dev/sda4</td>
+<td>/home</td>
+<td>~478 GB (remaining)</td>
+<td>ext4</td>
+</tr>
+</tbody>
+</table>
+<p>So, I ran gdisk, and iterated through the menu with the following values:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>gdisk<span class="w"> </span>/dev/sda
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>:<span class="w"> </span>n,<span class="w">    </span>&lt;default&gt;<span class="w"> </span><span class="o">(</span><span class="m">1</span><span class="o">)</span>,<span class="w">    </span>&lt;default&gt;,<span class="w">    </span>+1G,<span class="w">                 </span>ef00<span class="w"> </span><span class="o">(</span>EFI<span class="w"> </span>system<span class="o">)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>:<span class="w"> </span>n,<span class="w">    </span>&lt;default&gt;<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="o">)</span>,<span class="w">    </span>&lt;default&gt;,<span class="w">    </span>+1G,<span class="w">                 </span><span class="m">8200</span><span class="w"> </span><span class="o">(</span>linux-swap<span class="o">)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>:<span class="w"> </span>n,<span class="w">    </span>&lt;default&gt;<span class="w"> </span><span class="o">(</span><span class="m">3</span><span class="o">)</span>,<span class="w">    </span>&lt;default&gt;,<span class="w">    </span>+20G,<span class="w">                </span>&lt;default&gt;<span class="w"> </span><span class="o">(</span>linux<span class="o">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>:<span class="w"> </span>n,<span class="w">    </span>&lt;default&gt;<span class="w"> </span><span class="o">(</span><span class="m">4</span><span class="o">)</span>,<span class="w">    </span>&lt;default&gt;,<span class="w">    </span>&lt;default&gt;<span class="w"> </span><span class="o">(</span>rest<span class="o">)</span>,<span class="w">    </span>&lt;default&gt;
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>:<span class="w"> </span>w,<span class="w">    </span>Y
 </span></code></pre></div>
-<p>Great! Now, <code>uv</code> will create an isolated virtual environment for the script, download the dependencies and install them,
-and then run my script in the context of that venv! I don't have to manage the virtual environment myself nor worry
-about cluttering my system python with packages that I will invariably forget to remove later.</p>
-<p>One nice thing about a regular Python script, though, is that you can make it executable with a shebang line:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#!/usr/bin/env python</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">...</span>
-</span></code></pre></div>
-<p>Now, if I make the script executable (<code>chmod +x jam_users.py</code>), I can invoke it directly as an executable script!
-However, this won't take advantage of the <code>uv</code> script header because Python itself will just ignore the comment.</p>
-<p>So, I did some digging and found out that you can actually embed the invocation of the uv command right in the shebang
-line like so:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="ch">#!/usr/bin/env -S uv run --script</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># /// script</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># dependencies = [&quot;ipython&quot;, &quot;httpx&quot;, &quot;loguru&quot;]</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># ///</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">IPython</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="o">...</span>
-</span></code></pre></div>
-<p>This works because the <code>-S</code> flag tells the system to split everything after it into separate arguments before passing it
-to the system's <code>env</code>.</p>
-<p>Now (after <code>chmod +x jam_users.py</code>, of course), I can execute my script directly:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>./jam_users.py
-</span></code></pre></div>
-<p>That's it! What's even better is that I can run this script on any (Unix) system that has <code>uv</code> installed without needing
-to do ANY dependency or virtual environment management.</p>
-<p>Now, this script itself is really trivial and not much more than a toy example. However, in my past I have written
-rather complex scripts that I needed to hand off to other users to run. Of course, this always came with a long
-explanation of how to <em>prepare</em> their system just to run the script. This approach solves that problem instantly and
-painlessly (as long as they have <code>uv</code> installed).</p>
-<p>Take it for a spin, and let me know your thoughts.</p>
+<p>And, just like that, my new partition table was written. Of course, anything that was on the disk had been obliterated
+by writing the partition table, but that almost goes without saying. I mean, no one has lost any important data by
+recklessly writing to the partition table, right?</p>
 <p>Thanks for reading!</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><em>Note from the future</em>: I never finished this degree.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><em>Note from the future</em>: I wish I would have written this section. I wonder how different things are now...&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 
@@ -767,22 +852,22 @@ painlessly (as long as they have <code>uv</code> installed).</p>
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
-        
           
-          <a href="../../../04/06/bootstrapping-python-projects-with-copier/" class="md-footer__link md-footer__link--next" aria-label="Next: Bootstrapping Python projects with copier">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Bootstrapping Python projects with copier
-              </div>
-            </div>
+          <a href="../../../10/26/makefile-magic/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Makefile magic">
             <div class="md-footer__button md-icon">
               
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Makefile magic
+              </div>
             </div>
           </a>
+        
         
       </nav>
     
