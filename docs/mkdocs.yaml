@@ -16,6 +16,7 @@ theme:
     - navigation.tracking
     - navigation.footer
     - content.code.copy
+    - content.footnote.tooltips
   icon:
     repo: fontawesome/brands/github
   palette:
@@ -52,6 +53,7 @@ plugins:
   search:
     lang: en
 markdown_extensions:
+  - footnotes
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
