@@ -92,7 +92,7 @@ My wishlist ended up looking like:
 - The notes don't clutter the rendered documentation
 - All of my notes are aggregated in one place for easy review
 - The aggregated notes link back to the source location for context
-- The notes uses familiar, intuitive syntax
+- The notes use familiar, intuitive syntax
 
 Well, I decided to try my hand at writing my first mkdocs plugin:
 [mkdocs-editor-notes](https://github.com/dusktreader/mkdocs-editor-notes)
