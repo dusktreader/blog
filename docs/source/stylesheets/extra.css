@@ -1,0 +1,7 @@
+/* Custom styles for blog */
+
+/* Add border to images with the bordered class */
+img.bordered {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

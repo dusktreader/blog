@@ -1,5 +1,4 @@
 # Configuration for mkdocs
-
 site_name: the.dusktreader blog
 site_url: http://blog.dusktreader.dev
 repo_url: https://github.com/dusktreader/blog
@@ -16,6 +15,7 @@ theme:
     - navigation.tracking
     - navigation.footer
     - content.code.copy
+    - content.footnote.tooltips
   icon:
     repo: fontawesome/brands/github
   palette:
@@ -36,6 +36,8 @@ theme:
 watch:
   - ../docs/source
   - mkdocs.yaml
+extra_css:
+  - stylesheets/extra.css
 plugins:
   blog:
     blog_dir: .
@@ -70,3 +72,4 @@ markdown_extensions:
   - pymdownx.blocks.caption
   - toc:
       toc_depth: 4
+  - footnotes
