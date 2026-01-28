@@ -43,7 +43,7 @@ Markdown doesn't support comments natively. It's really stupid. You _can_ add an
 ```
 
 These are hidden from readers but they are ugly. I _hate_ HTML embedded in my Markdown files. It's like nails
-on a chalboard to me for some reason. Like any project with `TODO` comments, they end up scattered all over
+on a chalkboard to me for some reason. Like any project with `TODO` comments, they end up scattered all over
 my docs source files. They aren't _hard_ to find, but you have to remember to look for them! That means that
 they are easily forgotten.
 
