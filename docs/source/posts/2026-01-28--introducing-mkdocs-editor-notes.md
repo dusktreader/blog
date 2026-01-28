@@ -171,8 +171,7 @@ superscript emojis marking the editor notes.
 
 ![Quickstart example page](../images/2026-01-28--example-quickstart.png){ .bordered }
 
-If you click on
-Your documentation readers see a clean, professional guide. But when you visit `/editor-notes/`, you see all your
+If you click on an editor note marker, your documentation readers see a clean, professional guide. But when you visit `/editor-notes/`, you see all your
 editorial notes organized by type:
 
 ![Hover effect on editor notes](../images/2026-01-28--example-hover.png){ .bordered }
