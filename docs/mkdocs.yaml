@@ -43,6 +43,7 @@ plugins:
     blog_dir: .
     authors_file: .authors.yaml
   tags:
+  superfences-ps1:
   rss:
     enabled: !ENV [CI, false]
     match_path: source/posts/.*

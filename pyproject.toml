@@ -21,6 +21,7 @@ dependencies = [
     "pydantic>=2.11.2",
     "pyyaml>=6.0.2",
     "snick>=1.4.1",
+    "superfences-ps1>=0.1.0",
     "typer>=0.15.2",
 ]
 
