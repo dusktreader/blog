@@ -1,8 +1,14 @@
 ---
-date: '2026-04-14'
+date: 2026-04-14
 authors:
 - the.dusktreader
 comments: true
+tags:
+- Python
+- Pydantic
+- CLI
+categories:
+- dev-tools
 ---
 
 # Charm your Pydantic models with Wizdantic
