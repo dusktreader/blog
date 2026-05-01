@@ -1,6 +1,7 @@
 import snick
 import typer
 
+from blog.show import cli as show_cli
 from blog.write import cli as write_cli
 from blog.logging import init_logs
 from blog.version import show_version
@@ -33,6 +34,7 @@ def main(
     init_logs(verbose=verbose)
 
 
+cli.add_typer(show_cli, name="show")
 cli.add_typer(write_cli, name="write")
 
 
