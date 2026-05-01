@@ -1,5 +1,5 @@
 ---
-date: '2026-05-01'
+date: 2026-05-01
 authors:
 - the.dusktreader
 comments: true

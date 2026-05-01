@@ -1,7 +1,7 @@
 import os
 import subprocess
 import textwrap
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Annotated
 
@@ -13,7 +13,7 @@ from loguru import logger
 
 
 def build_post(
-    timestamp: str,
+    timestamp: date,
     title: str,
     categories: list[str] | None = None,
     tags: list[str] | None = None,
@@ -91,9 +91,10 @@ def write(
     """
     Generate a new post for the blog and open it in an editor.
     """
-    timestamp = datetime.now().strftime("%Y-%m-%d")
+    timestamp = datetime.now().date()
+    timestamp_str = timestamp.strftime("%Y-%m-%d")
 
     post_text: str = build_post(timestamp, title, categories=categories, tags=tags)
-    post_path = get_post_path(title, timestamp)
+    post_path = get_post_path(title, timestamp_str)
     save_post(post_text, post_path)
     edit_post(post_path)
