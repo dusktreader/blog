@@ -16,6 +16,8 @@ categories:
 
 # Introducing chill-out: ice out supply-chain attacks
 
+![chill-hero](https://dusktreader.github.io/chill-out/images/chill-hero.png){ width=600 }
+
 !!! tip "TLDR"
     Every new dependency release is an attack window. `chill-out` audits your lockfile, blocks anything too fresh to
     trust, and fixes violations automatically. It works for Python and npm, and takes thirty seconds to wire into CI.
