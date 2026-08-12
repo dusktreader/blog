@@ -1554,13 +1554,13 @@ cannot be the same shape: one is constrained by the storage schema, the other by
 is real work.</p>
 <!-- more -->
 
-<p>The Python ecosystem has no library for this. Pydantic, marshmallow, attrs, msgspec, cattrs, dataclasses: every one of
-them assumes data flows between <em>one</em> in-memory type and <em>one</em> wire format. Mapping between two distinct in-memory types
-is treated as a problem you solve by reaching for one of those libraries twice and gluing the results together with a
-<code>from_row()</code> classmethod and a <code>to_row()</code> instance method, or by collapsing both types into a single Pydantic model and
-burying the asymmetry inside <code>model_validator</code> and <code>model_serializer</code>. Both approaches work. Neither reads well at
-scale. Neither makes the asymmetric pieces (a field that exists only on one side, a transform that needs different logic
-in each direction, a runtime dependency the mapping needs) visible at a glance.</p>
+<p>The Python ecosystem has no library (that I know of) for this. Pydantic, marshmallow, attrs, msgspec, cattrs,
+dataclasses: every one of them assumes data flows between <em>one</em> in-memory type and <em>one</em> wire format. Mapping between
+two distinct in-memory types is treated as a problem you solve by reaching for one of those libraries twice and gluing
+the results together with a <code>from_row()</code> classmethod and a <code>to_row()</code> instance method, or by collapsing both types into
+a single Pydantic model and burying the asymmetry inside <code>model_validator</code> and <code>model_serializer</code>. Both approaches work.
+Neither reads well at scale. Neither makes the asymmetric pieces (a field that exists only on one side, a transform that
+needs different logic in each direction, a runtime dependency the mapping needs) visible at a glance.</p>
 <p>Betwixt is a design for that missing library. It is a peer-to-peer mapping layer that sits on top of any structured-type
 library, names the relationship between two types as a first-class object, and treats directionality as a visible
 concern at every declaration site. It does mapping and nothing else. The existing libraries keep doing what they do.</p>
@@ -1574,7 +1574,6 @@ and an honest "when not to use this."</p>
 <p>A reading guide for the impatient:</p>
 <ul>
 <li><a href="#design-principles">Design principles</a>: the two load-bearing commitments (peer-to-peer, directional vocabulary).</li>
-<li><a href="#nomenclature">Nomenclature</a>: the distinction between the <code>Betwixt</code> class and concrete mappings.</li>
 <li><a href="#the-scenario">The scenario</a> and <a href="#the-two-sides">The two sides</a>: the running example and the types it operates on.</li>
 <li><a href="#betwixt">Betwixt</a>: the full taxonomy of mapping constructs. This is the longest chapter and the heart of the spec.</li>
 <li><a href="#using-betwixt">Using Betwixt</a> and <a href="#partial-patch-translations">Partial / patch translations</a>:
