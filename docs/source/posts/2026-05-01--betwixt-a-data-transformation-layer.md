@@ -4,7 +4,11 @@ authors:
 - the.dusktreader
 comments: true
 tags:
-- Python,Pydantic,database,API,Long-form
+- Python
+- Pydantic
+- database
+- API
+- Long-form
 categories:
 - dev-tools
 ---
