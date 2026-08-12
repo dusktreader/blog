@@ -26,13 +26,13 @@ is real work.
 
 <!-- more -->
 
-The Python ecosystem has no library for this. Pydantic, marshmallow, attrs, msgspec, cattrs, dataclasses: every one of
-them assumes data flows between *one* in-memory type and *one* wire format. Mapping between two distinct in-memory types
-is treated as a problem you solve by reaching for one of those libraries twice and gluing the results together with a
-`from_row()` classmethod and a `to_row()` instance method, or by collapsing both types into a single Pydantic model and
-burying the asymmetry inside `model_validator` and `model_serializer`. Both approaches work. Neither reads well at
-scale. Neither makes the asymmetric pieces (a field that exists only on one side, a transform that needs different logic
-in each direction, a runtime dependency the mapping needs) visible at a glance.
+The Python ecosystem has no library (that I know of) for this. Pydantic, marshmallow, attrs, msgspec, cattrs,
+dataclasses: every one of them assumes data flows between *one* in-memory type and *one* wire format. Mapping between
+two distinct in-memory types is treated as a problem you solve by reaching for one of those libraries twice and gluing
+the results together with a `from_row()` classmethod and a `to_row()` instance method, or by collapsing both types into
+a single Pydantic model and burying the asymmetry inside `model_validator` and `model_serializer`. Both approaches work.
+Neither reads well at scale. Neither makes the asymmetric pieces (a field that exists only on one side, a transform that
+needs different logic in each direction, a runtime dependency the mapping needs) visible at a glance.
 
 Betwixt is a design for that missing library. It is a peer-to-peer mapping layer that sits on top of any structured-type
 library, names the relationship between two types as a first-class object, and treats directionality as a visible
@@ -49,7 +49,6 @@ and an honest "when not to use this."
 A reading guide for the impatient:
 
 - [Design principles](#design-principles): the two load-bearing commitments (peer-to-peer, directional vocabulary).
-- [Nomenclature](#nomenclature): the distinction between the `Betwixt` class and concrete mappings.
 - [The scenario](#the-scenario) and [The two sides](#the-two-sides): the running example and the types it operates on.
 - [Betwixt](#betwixt): the full taxonomy of mapping constructs. This is the longest chapter and the heart of the spec.
 - [Using Betwixt](#using-betwixt) and [Partial / patch translations](#partial-patch-translations):
