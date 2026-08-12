@@ -532,7 +532,7 @@ is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=c
           
           <li class="md-meta__item">
             
-              50 min read
+              53 min read
             
           </li>
         
@@ -544,17 +544,13 @@ is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=c
     <h2 id="betwixt-a-data-transformation-layer-design-spec"><a class="toclink" href="2026/05/01/betwixt-a-data-transformation-layer-design-spec/">Betwixt: a data transformation layer design spec</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">TLDR</p>
-<p>Your DB type and your API type are not the same shape. Stop
-trying to squish them together with awkward hooks, aliases,
-and non-local mapping functions. Betwixt your models lives
-a new, delcarative mapping layer.</p>
+<p>Your DB type and your API type are not the same shape. Stop trying to squish them together with awkward hooks,
+aliases, and non-local mapping functions. Betwixt your models lives a new, delcarative mapping layer.</p>
 </div>
-<p>Pick any non-trivial Python backend. There is a database type (an
-ORM row, a <code>@dataclass</code>, an attrs class) and there is an API type
-(a Pydantic model, an msgspec struct, whatever the framework
-demands). They are not the same shape. They cannot be the same
-shape: one is constrained by the storage schema, the other by
-the wire contract. Mapping between them is real work.</p>
+<p>Pick any non-trivial Python backend. There is a database type (an ORM row, a <code>@dataclass</code>, an attrs class) and there is
+an API type (a Pydantic model, an msgspec struct, whatever the framework demands). They are not the same shape. They
+cannot be the same shape: one is constrained by the storage schema, the other by the wire contract. Mapping between them
+is real work.</p>
 
     
       <nav class="md-post__action">
