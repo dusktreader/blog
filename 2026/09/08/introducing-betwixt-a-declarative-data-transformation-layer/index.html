@@ -501,9 +501,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#put-the-relationship-in-one-place" class="md-nav__link">
+  <a href="#a-simple-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Put the relationship in one place
+      A simple example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#betwixt-puts-the-relationship-in-one-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      Betwixt puts the relationship in one place
     </span>
   </a>
   
@@ -732,8 +741,13 @@ models depend on one another.</p>
 API endpoints usually have a Pydantic model tailored for RESTful calls while the database has a different representation
 of the same entity in a SQLAlchemy ORM model. Then, you might even have a mixed bag of external service representations,
 logging representations, and sometimes event schemas that embed the same entity.</p>
-<p>The differences between the data types are important for the <em>way</em> that format of the data is used. Some examples might
-include:</p>
+<p>Betwixt solves this problem by providing an explicit, declarative mapping that gathers all of the translation logic
+<em>for both directions</em> into one place.</p>
+<!-- more -->
+
+<h2 id="the-problem-at-the-boundary">The problem at the boundary</h2>
+<p>The differences between the different data types that deal with the same data in your app are important for the <em>way
+that shape of the data is used</em>. Some examples might include:</p>
 <ul>
 <li>The API exposes a display name while the database stores first and last names</li>
 <li>The API uses camelCase while the database uses snake_case</li>
@@ -749,9 +763,7 @@ different places where the hodge-podge of models and translation methods need to
 <p>Betwixt provides a single simple declarative method for defining the complete translation between two data types in
 both directions and a simple way to execute the translation. The models remain ordinary models. Betwixt does not
 replace Pydantic, SQLAlchemy, dataclasses, or any other data type; it connects them.</p>
-<!-- more -->
-
-<h2 id="the-problem-at-the-boundary">The problem at the boundary</h2>
+<h2 id="a-simple-example">A simple example</h2>
 <p>Let's start with a simple example. Imagine an account that crosses an API and database boundary. The database stores
 these fields in a SQLAlchemy ORM model:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
@@ -796,7 +808,7 @@ translation is not just a change of wire format:</p>
 </ul>
 <p>You can implement this with model methods and endpoint code. It works. As the surface area of either the API or data
 boundary grows, however, finding the complete relationship becomes a small archaeological expedition.</p>
-<h2 id="put-the-relationship-in-one-place">Put the relationship in one place</h2>
+<h2 id="betwixt-puts-the-relationship-in-one-place">Betwixt puts the relationship in one place</h2>
 <p>Betwixt keeps the models focused on their own jobs and places the conversion rules in a <code>Betwixt</code> subclass. The Pydantic
 model is the left side, and the SQLAlchemy ORM model is the right side:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">betwixt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Betwixt</span><span class="p">,</span> <span class="n">expand_rightward</span><span class="p">,</span> <span class="n">field_refs</span><span class="p">,</span> <span class="n">map_pairwise</span>
