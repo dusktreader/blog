@@ -27,8 +27,16 @@ API endpoints usually have a Pydantic model tailored for RESTful calls while the
 of the same entity in a SQLAlchemy ORM model. Then, you might even have a mixed bag of external service representations,
 logging representations, and sometimes event schemas that embed the same entity.
 
-The differences between the data types are important for the _way_ that format of the data is used. Some examples might
-include:
+Betwixt solves this problem by providing an explicit, declarative mapping that gathers all of the translation logic
+_for both directions_ into one place.
+
+<!-- more -->
+
+
+## The problem at the boundary
+
+The differences between the different data types that deal with the same data in your app are important for the _way
+that shape of the data is used_. Some examples might include:
 
 * The API exposes a display name while the database stores first and last names
 * The API uses camelCase while the database uses snake_case
@@ -47,10 +55,7 @@ both directions and a simple way to execute the translation. The models remain o
 replace Pydantic, SQLAlchemy, dataclasses, or any other data type; it connects them.
 
 
-<!-- more -->
-
-
-## The problem at the boundary
+## A simple example
 
 Let's start with a simple example. Imagine an account that crosses an API and database boundary. The database stores
 these fields in a SQLAlchemy ORM model:
@@ -104,7 +109,7 @@ You can implement this with model methods and endpoint code. It works. As the su
 boundary grows, however, finding the complete relationship becomes a small archaeological expedition.
 
 
-## Put the relationship in one place
+## Betwixt puts the relationship in one place
 
 Betwixt keeps the models focused on their own jobs and places the conversion rules in a `Betwixt` subclass. The Pydantic
 model is the left side, and the SQLAlchemy ORM model is the right side:
