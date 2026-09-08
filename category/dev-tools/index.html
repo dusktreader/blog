@@ -520,6 +520,80 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2026-09-08 00:00:00+00:00">September 8, 2026</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="./" class="md-meta__link">dev-tools</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              7 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="introducing-betwixt-a-declarative-data-transformation-layer"><a class="toclink" href="../../2026/09/08/introducing-betwixt-a-declarative-data-transformation-layer/">Introducing Betwixt: a declarative data transformation layer</a></h2>
+<p><a _="," href="https://github.com/dusktreader/betixt" target="blank" width="600"><img alt="betwixt-logo" src="https://dusktreader.github.io/betwixt/static/logo.png" /></a></p>
+<div class="admonition tip">
+<p class="admonition-title">TLDR</p>
+<p>The first full-featured release of <a href="https://pypi.org/project/betwixt-data/"><code>betwixt-data</code></a> is now on PyPI. Betwixt
+gives the translation between your API, application, and database models a first-class home without making those
+models depend on one another.</p>
+</div>
+<p>In my years building Python APIs, I've found that I'm describing the same entity across more than one data model. The
+API endpoints usually have a Pydantic model tailored for RESTful calls while the database has a different representation
+of the same entity in a SQLAlchemy ORM model. Then, you might even have a mixed bag of external service representations,
+logging representations, and sometimes event schemas that embed the same entity.</p>
+<p>The differences between the data types are important for the <em>way</em> that format of the data is used. Some examples might
+include:</p>
+<ul>
+<li>The API exposes a display name while the database stores first and last names</li>
+<li>The API uses camelCase while the database uses snake_case</li>
+<li>The API represents money in dollars while the database uses cents</li>
+<li>The API nests line items while the database stores normalized rows</li>
+<li>The API computes totals from request-time currency context</li>
+<li>A partial update contains one changed field while the complete database model requires several</li>
+</ul>
+<p>Translating between those shapes, however, always gets a bit messy. You find yourself using Pydantic aliases and
+validators mixed with SQLAlchemy model properties. Then, you might add in other helper methods and even explicit
+field-by-field translation functions. When you need to add fields or change types, you have to remember all the
+different places where the hodge-podge of models and translation methods need to be updated.</p>
+<p>Betwixt provides a single simple declarative method for defining the complete translation between two data types in
+both directions and a simple way to execute the translation. The models remain ordinary models. Betwixt does not
+replace Pydantic, SQLAlchemy, dataclasses, or any other data type; it connects them.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026/09/08/introducing-betwixt-a-declarative-data-transformation-layer/">
+          Continue reading
+        </a>
+      </nav>
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://github.com/dusktreader.png" alt="Tucker Beck">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2026-05-01 00:00:00+00:00">May 1, 2026</time></li>
         
           <li class="md-meta__item">
